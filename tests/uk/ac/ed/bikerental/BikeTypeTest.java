@@ -13,7 +13,7 @@ public class BikeTypeTest {
     public void testCreation() {
         BigDecimal price = BigDecimal.valueOf(20.0);
         BigDecimal replacementValue = BigDecimal.valueOf(100.0);
-        BikeType bikeType = new BikeType("mountainbike", price, replacementValue);
-        System.out.println(BikeType.getReplacementValue("mountainbike"));
+        BikeType bikeType = new BikeType("mountainBike", replacementValue);
+        System.out.println(BikeType.getReplacementValue(BikeTypes.from("mountainBike")));
     }
 }

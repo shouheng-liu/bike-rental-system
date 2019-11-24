@@ -6,15 +6,14 @@ import java.util.Objects;
 
 public class BikeType {
 
-    private static final HashMap<String, BikeType> ExistingBikeTypes = new HashMap<String, BikeType>();
-    private String bikeType = "";
-    private BigDecimal price = BigDecimal.ZERO;
+    private static final HashMap<BikeTypes, BikeType> ExistingBikeTypes = new HashMap<BikeTypes, BikeType>();
+    private BikeTypes bikeType;
     private BigDecimal replacementValue = BigDecimal.ZERO;
 
-    public BikeType(String type, BigDecimal p, BigDecimal replacement) {
-        bikeType = type;
-        price = p;
-        replacementValue = replacement;
+    public BikeType(String bikeType, BigDecimal replacementValue) {
+        BikeTypes type = BikeTypes.from(bikeType);
+        this.bikeType = type;
+        this.replacementValue = replacementValue;
         ExistingBikeTypes.put(type, this);
     }
 
@@ -22,27 +21,19 @@ public class BikeType {
         return this.replacementValue;
     }
 
-    public static BigDecimal getReplacementValue(String name) {
-        return getBikeType(name).getReplacementValue();
+    public static BigDecimal getReplacementValue(BikeTypes bikeType) {
+        return getBikeType(bikeType).getReplacementValue();
     }
 
-    public BigDecimal getPrice() {
-        return this.price;
+    public BikeTypes getBikeType() {
+        return this.bikeType;
     }
 
-    public static BigDecimal getPrice(String name) {
-        return getBikeType(name).getPrice();
-    }
-
-    public String getBikeType() {
-        return bikeType;
-    }
-
-    public static HashMap<String, BikeType> getExistingBikeTypes() {
+    public static HashMap<BikeTypes, BikeType> getExistingBikeTypes() {
         return ExistingBikeTypes;
     }
 
-    public static BikeType getBikeType(String name) {
-        return ExistingBikeTypes.get(name);
+    public static BikeType getBikeType(BikeTypes bikeType) {
+        return ExistingBikeTypes.get(bikeType);
     }
 }
