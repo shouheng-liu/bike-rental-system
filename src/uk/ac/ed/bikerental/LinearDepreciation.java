@@ -5,13 +5,36 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 public class LinearDepreciation implements ValuationPolicy {
+
     private BigDecimal depreciationRate = BigDecimal.valueOf(0.0);
 
     public LinearDepreciation(BigDecimal depreciationRate) {
         this.depreciationRate = depreciationRate;
     }
-    public BigDecimal calculateValue(Bike bike, LocalDate date){
-        return BigDecimal.ZERO;
 
+    public void setDepreciationRate(BigDecimal depreciationRate) {
+        this.depreciationRate = depreciationRate;
+    }
+
+    public BigDecimal getDepreciationRate() {
+        return depreciationRate;
+    }
+
+    public BigDecimal calculateValue(Bike bike, LocalDate date){
+        BigDecimal age =
+                BigDecimal.valueOf(new DateRange(bike.getManufacturingDate(), date).toYears());
+        BigDecimal replacementValue = bike.getType().getReplacementValue();
+        BigDecimal depreciation =
+                replacementValue.multiply(age).multiply(this.depreciationRate);
+
+        BigDecimal adjustedReplacementValue = replacementValue.subtract(depreciation);
+
+        if (adjustedReplacementValue.compareTo(BigDecimal.ZERO) >= 0) {
+            return adjustedReplacementValue;
+        }
+        else {
+            throw new RuntimeException("Replacement value negative. Try to set a lower " +
+                    "depreciation rate or replace the bike.");
+        }
     }
 }

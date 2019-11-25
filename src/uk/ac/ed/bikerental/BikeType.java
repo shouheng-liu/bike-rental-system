@@ -14,7 +14,7 @@ public class BikeType {
         BikeTypes type = BikeTypes.from(bikeType);
         this.bikeType = type;
         this.replacementValue = replacementValue;
-        ExistingBikeTypes.put(type, this);
+        ExistingBikeTypes.putIfAbsent(type, this);
     }
 
     public BigDecimal getReplacementValue() {
