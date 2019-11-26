@@ -27,7 +27,6 @@ public class Bike {
     }
 
     public BikeType getType() {
-        // TODO: Implement Bike.getType
         return Controller.getBikeType(this.bikeType);
     }
 

@@ -15,12 +15,25 @@ public class Provider {
     private Location address;
     private BigDecimal depositRate;
     private ArrayList<Provider> partners = new ArrayList<Provider>();
-    private ValuationPolicy valuationPolicy;
+    private ValuationPolicy valuationPolicy = new BasicValuation();
+    private PricingPolicy pricingPolicy = new BasicPricing(this);
 
     public Provider(Location shopLocation, String name, BigDecimal depositRate) {
         this.name = name;
         this.address = shopLocation;
         this.depositRate = depositRate;
+    }
+
+    public void setValuationPolicy(ValuationPolicy valuationPolicy) {
+        this.valuationPolicy = valuationPolicy;
+    }
+
+    public ValuationPolicy getValuationPolicy() {
+        return this.valuationPolicy;
+    }
+
+    public PricingPolicy getPricingPolicy() {
+        return this.pricingPolicy;
     }
 
     public Location getAddress() {
@@ -42,6 +55,9 @@ public class Provider {
             this.getOwnedBikesOfType(bikeType).add(newBike);
             this.getAvailableBikesOfType(bikeType).add(newBike);
         }
+        BigDecimal rentalPrice = Controller.getBikeType(bikeType).getReplacementValue();
+        rentalPrice = rentalPrice.multiply(BigDecimal.valueOf(1/20));
+        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(bikeType), rentalPrice);
     }
 
     public ArrayList<Bike> getBikes(HashMap<BikeTypes, Integer> requestedBikes) {

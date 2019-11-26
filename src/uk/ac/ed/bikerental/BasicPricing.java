@@ -10,12 +10,14 @@ public class BasicPricing implements PricingPolicy {
     public BasicPricing(Provider provider) {
         this.provider = provider;
     }
+
     @Override
     public void setDailyRentalPrice(BikeType bikeType, BigDecimal dailyPrice) {
         for (Bike bike : this.provider.getOwnedBikesOfType(bikeType.getBikeType())) {
             bike.setDailyPrice(dailyPrice);
         }
     }
+
     @Override
     public BigDecimal calculatePrice(Collection<Bike> bikes, DateRange duration) {
         long days = duration.toDays();
