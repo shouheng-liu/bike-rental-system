@@ -2,7 +2,7 @@ package uk.ac.ed.bikerental;
 
 public enum BookingStates {
 
-    LEASEOVER, LEASEONGOING, RESERVED;
+    LEASEOVER, LEASEONGOING, RESERVED, ONDELIVERY, RETURNDELIVERY;
 
     public static BookingStates from(String bookingState) {
         switch(bookingState) {

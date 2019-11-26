@@ -7,18 +7,24 @@ import java.util.ArrayList;
 
 public class Quote {
 
-    private ArrayList<Bike> bikes;
-    private boolean deliverable;
-    private LocalDate bookingDate;
-    private LocalDate returnDate;
-    private Provider provider;
+    public ArrayList<Bike> bikes;
+    public boolean deliverable;
+    public LocalDate bookingDate;
+    public LocalDate returnDate;
+    public Provider provider;
     public BigDecimal total;
     public BigDecimal price;
     public BigDecimal deposit;
 
-    public Quote(ArrayList<Bike> bikes, Provider provider, LocalDate start, LocalDate end) {
+    public Quote() {
+
+    }
+
+    public Quote(ArrayList<Bike> bikes, Provider provider, boolean deliverable, LocalDate start,
+                 LocalDate end) {
         this.bikes = bikes;
         this.provider = provider;
+        this.deliverable = deliverable;
         this.bookingDate = start;
         this.returnDate = end;
         this.deposit = this.calculateDeposit(this.bikes);
@@ -26,7 +32,11 @@ public class Quote {
         this.total = this.calculateTotal();
     }
 
-    private BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
+    public ArrayList<Bike> getBikes() {
+        return this.bikes;
+    }
+
+    public BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
         BigDecimal deposit = BigDecimal.ZERO;
         for (Bike bike : bikes) {
             BigDecimal depositAmount = this.provider.getValuationPolicy().calculateValue(bike,
@@ -37,13 +47,13 @@ public class Quote {
         return deposit;
     }
 
-    private BigDecimal calculatePrice(ArrayList<Bike> bikes) {
+    public BigDecimal calculatePrice(ArrayList<Bike> bikes) {
         DateRange dateRange = new DateRange(this.bookingDate, this.returnDate);
         BigDecimal price = this.provider.getPricingPolicy().calculatePrice(bikes, dateRange);
         return price;
     }
 
-    private BigDecimal calculateTotal() {
+    public BigDecimal calculateTotal() {
         BigDecimal total = this.deposit;
         total = total.add(this.price);
         return total;

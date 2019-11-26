@@ -1,5 +1,6 @@
 package uk.ac.ed.bikerental;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,29 +52,40 @@ public class Controller {
     }
 
     public static ArrayList<Quote> getQuotes(HashMap<BikeTypes, Integer> desiredBikes,
-                                      DateRange dateRange, Location location) {
+                                      DateRange dateRange, Location location, boolean delivery) {
         ArrayList<Quote> quotes = new ArrayList<>();
         for (Provider provider : providers) {
             Quote quote;
-            if (location.isNearTo(provider.getAddress())) {
+            if (location.isNearTo(provider.getAddress()) || !delivery)  {
                 ArrayList<Bike> bikesForQuote;
                 boolean flag = true;
                 for (BikeTypes type : desiredBikes.keySet()) {
-                    if (provider.getAvailableBikesOfType(type).size() >= desiredBikes.get(type)) {
-                        continue;
-                    }
-                    else {
+                    if (provider.getAvailableBikesOfType(type).size() < desiredBikes.get(type)) {
                         flag = false;
                         break;
                     }
                 }
                 if (flag) {
                     bikesForQuote = provider.getBikes(desiredBikes);
-                    quotes.add(new Quote(bikesForQuote, provider, dateRange.getStart(),
+                    quotes.add(new Quote(bikesForQuote, provider, delivery, dateRange.getStart(),
                             dateRange.getEnd()));
                 }
             }
         }
         return quotes;
+    }
+
+    public static Payment bookQuote(Quote quote, Customer customer) {
+        Booking booking = new Booking(quote, customer);
+        if (booking.getAddressDelivery()) {
+            DeliveryService deliveryService = DeliveryServiceFactory.getDeliveryService();
+
+            for (Deliverable bike : booking.getBikes()) {
+                deliveryService.scheduleDelivery( bike, booking.provider.getAddress(),
+                        customer.getLocation(), booking.bookingDate);
+
+            }
+        }
+        return booking.getPaymentInfo();
     }
 }

@@ -37,7 +37,7 @@ public class FindQuoteTest {
         LocalDate bookingDate = LocalDate.now().plusYears(3);
         DateRange dateRange = new DateRange(bookingDate, bookingDate.plusDays(10));
         ArrayList<Quote> quotes = Controller.getQuotes(desiredBikes, dateRange,
-                this.customer.getLocation());
+                this.customer.getLocation(), true);
         System.out.println(quotes.get(0).total);
         System.out.println(quotes.get(0).price);
         System.out.println(quotes.get(0).deposit);

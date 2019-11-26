@@ -57,6 +57,7 @@ public class Provider {
         return this.availableBikes.get(type);
     }
 
+
     public void addBikes(BikeTypes bikeType, int amount) {
         if (!this.ownedBikes.containsKey(bikeType)) {
             this.ownedBikes.put(bikeType, new ArrayList<Bike>());
@@ -68,9 +69,8 @@ public class Provider {
             this.getOwnedBikesOfType(bikeType).add(newBike);
             this.getAvailableBikesOfType(bikeType).add(newBike);
         }
-        BigDecimal rentalPrice = Controller.getBikeType(bikeType).getReplacementValue();
-        rentalPrice = rentalPrice.multiply(BigDecimal.valueOf(1.0/20.0));
-        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(bikeType), rentalPrice);
+        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(bikeType),
+                BigDecimal.valueOf(10));
     }
 
     public ArrayList<Bike> getBikes(HashMap<BikeTypes, Integer> requestedBikes) {

@@ -4,7 +4,7 @@ package uk.ac.ed.bikerental;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Bike {
+public class Bike implements Deliverable {
     private BikeState bikeState;
     private LocalDate manufacturingDate;
     private BikeTypes bikeType;
@@ -54,7 +54,17 @@ public class Bike {
         this.bikeState = bikeState;
     }
 
+    @Override
+    public void onPickup() {
+        this.bikeState = BikeState.PICKUP;
+    }
+
+    @Override
+    public void onDropoff() {
+        this.bikeState = BikeState.DROPOFF;
+    }
     public BikeState getBikeState() {
         return this.bikeState;
     }
+
 }
