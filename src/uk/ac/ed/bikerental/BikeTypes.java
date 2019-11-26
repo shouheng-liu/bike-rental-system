@@ -4,8 +4,8 @@ public enum BikeTypes {
 
     ROADBIKE, MOUNTAINBIKE, EBIKE, HYBRIDBIKE;
 
-    public static BikeTypes from(String BikeType) {
-        switch(BikeType) {
+    public static BikeTypes from(String bikeType) {
+        switch(bikeType) {
             case "roadBike":
                 return ROADBIKE;
             case "mountainBike":

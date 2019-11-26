@@ -26,7 +26,7 @@ public class LinearDepreciation implements ValuationPolicy {
     public BigDecimal calculateValue(Bike bike, LocalDate date){
         BigDecimal age =
                 BigDecimal.valueOf(new DateRange(bike.getManufacturingDate(), date).toYears());
-        BigDecimal replacementValue = bike.getType().getReplacementValue();
+        BigDecimal replacementValue = bike.getReplacementValue();
         BigDecimal depreciation =
                 replacementValue.multiply(age).multiply(this.depreciationRate);
 

@@ -10,6 +10,7 @@ public class Bike {
     private BikeTypes bikeType;
     private int identifier;
     private Location returnLocation;
+    private BigDecimal dailyPrice;
 
     public Bike(BikeTypes bikeType, Location returnLocation) {
 
@@ -40,6 +41,14 @@ public class Bike {
 
     public BigDecimal getReplacementValue() {
         return this.getType().getReplacementValue();
+    }
+
+    public void setDailyPrice(BigDecimal dailyPrice) {
+        this.dailyPrice = dailyPrice;
+    }
+
+    public BigDecimal getDailyPrice() {
+        return this.dailyPrice;
     }
 
     public void setBikeState(BikeState bikeState) {

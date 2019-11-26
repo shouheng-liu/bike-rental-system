@@ -16,14 +16,17 @@ public class Quote {
     private BigDecimal total;
     private BigDecimal deposit;
 
-    public Quote(ArrayList<Bike> bikes, Provider provider) {
+    public Quote(ArrayList<Bike> bikes, Provider provider, LocalDate start, LocalDate end) {
         this.bikes = bikes;
         this.provider = provider;
+        this.bookingDate = start;
+        this.returnDate = end;
     }
 
     public boolean isDeliverable(Location customerLocation, Location providerLocation) {
         return customerLocation.isNearTo(providerLocation);
     }
+
 
 
 
