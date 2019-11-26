@@ -12,8 +12,35 @@ public class Location {
     
     public boolean isNearTo(Location other) {
         // TODO: Implement Location.isNearTo
+        String input1 = this.postcode;
+        String input2 = other.postcode;
+        String firstTwoChars1 = "";
+        String firstTwoChars2 = "";
+
+        System.out.println(firstTwoChars(input1));
+        System.out.println(firstTwoChars(input2));
+
+        if ((firstTwoChars(input1)).equals(firstTwoChars(input2))) {
+            return true;
+        }
+        else {
+            return false; 
+        }
         assert false;
         return true;
+    }
+    
+    public static String firstTwoChars(String input) {
+        String firstTwoChars = "";
+        if (input.length() > 2) 
+        {
+            firstTwoChars = input.substring(0, 2);
+        } 
+        else
+        {
+            firstTwoChars = input;
+        }
+        return (firstTwoChars);
     }
 
     public String getPostcode() {
