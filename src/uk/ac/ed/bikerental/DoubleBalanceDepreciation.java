@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class DoubleBalanceDepreciation implements ValuationPolicy {
-    private BigDecimal depreciationRate = BigDecimal.valueOf(0.0);
+    private BigDecimal depreciationRate;
 
     public DoubleBalanceDepreciation(BigDecimal depreciationRate) {
         assert depreciationRate.compareTo(BigDecimal.ONE) <= 0;

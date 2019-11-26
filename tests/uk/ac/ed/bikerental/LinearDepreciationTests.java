@@ -42,8 +42,8 @@ public class LinearDepreciationTests {
         ValuationPolicy linearPolicy = new LinearDepreciation(depreciationRate);
         assertEquals(linearPolicy.calculateValue(bike, dates[0]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
-        assertEquals(linearPolicy.calculateValue(bike, dates[1]).stripTrailingZeros(),
-                BigDecimal.valueOf(630.0).stripTrailingZeros());
+        assertEquals(BigDecimal.valueOf(630.0).stripTrailingZeros(),
+                linearPolicy.calculateValue(bike, dates[1]).stripTrailingZeros());
         assertEquals(linearPolicy.calculateValue(bike, dates[2]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
         assertThrows(RuntimeException.class, () ->

@@ -10,13 +10,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class BikeTest {
 
     Location locationDummy = new Location("EH1 1LY", "Cowgate");
-    BikeType type = new BikeType("mountainBike", BigDecimal.valueOf(100.0));
+    BikeType type = new BikeType("mountainBike", BigDecimal.valueOf(900.0));
     Bike mountainBike = new Bike(BikeTypes.from("mountainBike"), locationDummy);
 
     @Test
     public void testExistenceType() {
+
         assertThrows(RuntimeException.class, () -> //throw error because biketype wasn't registered
         {new Bike(BikeTypes.from("eBike"), locationDummy); });
+    }
+
+    @Test
+    public void testUniqueID() {
+        Bike otherBike = new Bike(BikeTypes.from("mountainBike"), locationDummy);
+        assertNotEquals(mountainBike.getIdentifier(), otherBike.getIdentifier());
     }
 
     @Test

@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Bike {
-    private static int identifierCount;
     private BikeState bikeState;
     private LocalDate manufacturingDate;
     private BikeTypes bikeType;
@@ -22,8 +21,8 @@ public class Bike {
         this.bikeType = bikeType;
         this.returnLocation = returnLocation;
         this.manufacturingDate = LocalDate.now();
-        identifierCount++;
-        this.identifier = identifierCount;
+        this.identifier = Controller.getIdentifierCount();
+        Controller.setIdentifierCount(this.identifier + 1);
     }
 
     public BikeType getType() {
@@ -35,7 +34,19 @@ public class Bike {
         return this.manufacturingDate;
     }
 
+    public int getIdentifier() {
+        return identifier;
+    }
+
     public BigDecimal getReplacementValue() {
         return this.getType().getReplacementValue();
+    }
+
+    public void setBikeState(BikeState bikeState) {
+        this.bikeState = bikeState;
+    }
+
+    public BikeState getBikeState() {
+        return this.bikeState;
     }
 }

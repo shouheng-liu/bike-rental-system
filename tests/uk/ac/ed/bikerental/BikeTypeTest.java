@@ -9,7 +9,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BikeTypeTest {
-    private BigDecimal replacementValue = BigDecimal.valueOf(100.0);
+    private BigDecimal replacementValue = BigDecimal.valueOf(900.0);
     private BikeType bikeType = new BikeType("mountainBike", replacementValue);
 
     @Test
@@ -36,7 +36,8 @@ public class BikeTypeTest {
         // bike type value is the final one
         assertEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
         BikeTypes type2 = BikeTypes.from("eBike");
-        new BikeType("eBike", BigDecimal.valueOf(900.0));
+        new BikeType("eBike", BigDecimal.valueOf(1230.0)); //check if replacement value for each
+        // bikeType
         hashmapBikeType = Controller.getBikeType(type2);
         assertNotEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
 
