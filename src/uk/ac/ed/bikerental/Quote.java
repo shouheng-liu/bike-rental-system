@@ -13,6 +13,7 @@ public class Quote {
     private LocalDate returnDate;
     private Provider provider;
     private BigDecimal total;
+    private BigDecimal price;
     private BigDecimal deposit;
 
     public Quote(ArrayList<Bike> bikes, Provider provider, LocalDate start, LocalDate end) {
@@ -20,8 +21,9 @@ public class Quote {
         this.provider = provider;
         this.bookingDate = start;
         this.returnDate = end;
-        this.deposit = calculateDeposit(bikes);
-        this.total = calculateTotal(bikes);
+        this.deposit = this.calculateDeposit(this.bikes);
+        this.price = this.calculatePrice(this.bikes);
+        this.total = this.calculateTotal();
     }
 
     private BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
@@ -34,11 +36,15 @@ public class Quote {
         return deposit;
     }
 
-    private BigDecimal calculateTotal(ArrayList<Bike> bikes) {
-        BigDecimal total = this.deposit;
+    private BigDecimal calculatePrice(ArrayList<Bike> bikes) {
         DateRange dateRange = new DateRange(this.bookingDate, this.returnDate);
         BigDecimal price = this.provider.getPricingPolicy().calculatePrice(bikes, dateRange);
-        total = total.add(price);
+        return price;
+    }
+
+    private BigDecimal calculateTotal() {
+        BigDecimal total = this.deposit;
+        total = total.add(this.price);
         return total;
     }
 
