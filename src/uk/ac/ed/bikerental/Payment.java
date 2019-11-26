@@ -15,8 +15,8 @@ public class Payment {
         this.price = price;
         this.total = total;
         this.depositReturned = false;
-        this.orderNumber = Controller.getOrderCount();
-        Controller.setOrderCount(this.orderNumber + 1);
+        this.orderNumber = BookingController.getOrderCount();
+        BookingController.setOrderCount(this.orderNumber + 1);
     }
 
     public BigDecimal getTotal() {
