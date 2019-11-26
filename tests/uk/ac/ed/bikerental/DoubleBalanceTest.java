@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class DoubleBalanceTest {
 
     BigDecimal depreciationRate;
-    LocalDate[] dates = new LocalDate[4];
+    LocalDate[] dates = new LocalDate[3];
     Bike bike;
     //BigDecimal replacementValue = BigDecimal.valueOf(900.0);
 
@@ -27,7 +27,6 @@ public class DoubleBalanceTest {
         dates[0] = LocalDate.now();
         dates[1] = LocalDate.now().plusYears(3);
         dates[2] = LocalDate.now().plusDays(10);
-        dates[3] = LocalDate.now().plusYears(11);
     }
 
     @Test
@@ -51,8 +50,6 @@ public class DoubleBalanceTest {
                 doubleBalancePolicy.calculateValue(bike, dates[1]).stripTrailingZeros());
         assertEquals(doubleBalancePolicy.calculateValue(bike, dates[2]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
-        assertThrows(RuntimeException.class, () ->
-        {doubleBalancePolicy.calculateValue(bike, dates[3]); });
 
 
 

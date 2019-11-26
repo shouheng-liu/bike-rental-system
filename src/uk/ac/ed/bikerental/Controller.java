@@ -25,6 +25,11 @@ public class Controller {
         Controller.identifierCount = identifierCount;
     }
 
+    public static ArrayList<Provider> getProviders() {
+        return providers;
+    }
+
+
     public static int getIdentifierCount() {
         return identifierCount;
     }
@@ -37,15 +42,15 @@ public class Controller {
         Controller.orderCount = orderCount;
     }
 
-    public void addProvider(Provider provider) {
+    public static void addProvider(Provider provider) {
         providers.add(provider);
     }
 
-    public void removeProvider(Provider provider) {
+    public static void removeProvider(Provider provider) {
         providers.remove(provider);
     }
 
-    public ArrayList<Quote> getQuotes(HashMap<BikeTypes, Integer> desiredBikes,
+    public static ArrayList<Quote> getQuotes(HashMap<BikeTypes, Integer> desiredBikes,
                                       DateRange dateRange, Location location) {
         ArrayList<Quote> quotes = new ArrayList<>();
         for (Provider provider : providers) {

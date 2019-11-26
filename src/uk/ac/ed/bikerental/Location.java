@@ -17,8 +17,6 @@ public class Location {
         String firstTwoChars1 = "";
         String firstTwoChars2 = "";
 
-        System.out.println(firstTwoChars(input1));
-        System.out.println(firstTwoChars(input2));
 
         if ((firstTwoChars(input1)).equals(firstTwoChars(input2))) {
             return true;
@@ -26,8 +24,8 @@ public class Location {
         else {
             return false; 
         }
-        assert false;
-        return true;
+        //assert false;
+        //return true;
     }
     
     public static String firstTwoChars(String input) {

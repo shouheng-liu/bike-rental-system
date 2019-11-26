@@ -36,8 +36,8 @@ public class DateRange {
         } else {
             return false;
         }
-        assert false;
-        return null;
+        //assert false;
+        //return null;
     }
 
     @Override

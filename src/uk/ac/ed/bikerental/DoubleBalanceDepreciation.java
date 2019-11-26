@@ -25,9 +25,9 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
         BigDecimal age =
                 BigDecimal.valueOf(new DateRange(bike.getManufacturingDate(), date).toYears());
         BigDecimal replacementValue = bike.getReplacementValue();     //
-        BigDecimal depreciationFactor = age.subtract(BigDecimal.ONE);           // replacementValue*
-        depreciationFactor = depreciationFactor.multiply(this.depreciationRate);// (1 - (age - 1) *
-        depreciationFactor = BigDecimal.ONE.subtract(depreciationFactor);    //depreciationRate)**age
+        BigDecimal depreciationFactor = BigDecimal.valueOf(2);             // replacementValue*
+        depreciationFactor = depreciationFactor.multiply(this.depreciationRate);// (1 - 2 * depreciationRate)**age
+        depreciationFactor = BigDecimal.ONE.subtract(depreciationFactor);
         depreciationFactor = depreciationFactor.pow(age.intValue());
         BigDecimal adjustedReplacementValue = replacementValue.multiply(depreciationFactor);
 

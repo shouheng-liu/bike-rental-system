@@ -12,9 +12,9 @@ public class Quote {
     private LocalDate bookingDate;
     private LocalDate returnDate;
     private Provider provider;
-    private BigDecimal total;
-    private BigDecimal price;
-    private BigDecimal deposit;
+    public BigDecimal total;
+    public BigDecimal price;
+    public BigDecimal deposit;
 
     public Quote(ArrayList<Bike> bikes, Provider provider, LocalDate start, LocalDate end) {
         this.bikes = bikes;
@@ -31,6 +31,7 @@ public class Quote {
         for (Bike bike : bikes) {
             BigDecimal depositAmount = this.provider.getValuationPolicy().calculateValue(bike,
                     this.bookingDate);
+            depositAmount = depositAmount.multiply(this.provider.getDepositRate());
             deposit = deposit.add(depositAmount);
         }
         return deposit;

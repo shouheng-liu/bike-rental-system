@@ -22,6 +22,7 @@ public class Provider {
         this.name = name;
         this.address = shopLocation;
         this.depositRate = depositRate;
+        Controller.addProvider(this);
     }
 
     public void setValuationPolicy(ValuationPolicy valuationPolicy) {
@@ -34,6 +35,14 @@ public class Provider {
 
     public PricingPolicy getPricingPolicy() {
         return this.pricingPolicy;
+    }
+
+    public BigDecimal getDepositRate() {
+        return depositRate;
+    }
+
+    public void setDepositRate(BigDecimal depositRate) {
+        this.depositRate = depositRate;
     }
 
     public Location getAddress() {
@@ -49,6 +58,10 @@ public class Provider {
     }
 
     public void addBikes(BikeTypes bikeType, int amount) {
+        if (!this.ownedBikes.containsKey(bikeType)) {
+            this.ownedBikes.put(bikeType, new ArrayList<Bike>());
+            this.availableBikes.put(bikeType, new ArrayList<Bike>());
+        }
         int i;
         for (i = 0; i < amount; i++) {
             Bike newBike = new Bike(bikeType, this.address);
@@ -56,7 +69,7 @@ public class Provider {
             this.getAvailableBikesOfType(bikeType).add(newBike);
         }
         BigDecimal rentalPrice = Controller.getBikeType(bikeType).getReplacementValue();
-        rentalPrice = rentalPrice.multiply(BigDecimal.valueOf(1/20));
+        rentalPrice = rentalPrice.multiply(BigDecimal.valueOf(1.0/20.0));
         this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(bikeType), rentalPrice);
     }
 

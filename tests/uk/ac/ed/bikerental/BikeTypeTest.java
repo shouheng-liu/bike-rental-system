@@ -14,8 +14,7 @@ public class BikeTypeTest {
 
     @Test
     public void testCreation() {
-        BikeTypes type = BikeTypes.from(
-                "mountainBike");
+        BikeTypes type = BikeTypes.MOUNTAINBIKE;
         BigDecimal storedReplacementValue = bikeType.getReplacementValue();
         assertEquals(replacementValue.stripTrailingZeros(),
                 storedReplacementValue.stripTrailingZeros());
@@ -37,7 +36,7 @@ public class BikeTypeTest {
         assertEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
         BikeTypes type2 = BikeTypes.from("eBike");
         new BikeType("eBike", BigDecimal.valueOf(1230.0)); //check if replacement value for each
-        // bikeType
+        // bikeType can be different
         hashmapBikeType = Controller.getBikeType(type2);
         assertNotEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
 
