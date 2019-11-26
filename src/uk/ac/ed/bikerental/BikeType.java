@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class BikeType {
 
-    private static final HashMap<BikeTypes, BikeType> ExistingBikeTypes = new HashMap<BikeTypes, BikeType>();
     private BikeTypes bikeType;
     private BigDecimal replacementValue = BigDecimal.ZERO;
 
@@ -14,26 +13,16 @@ public class BikeType {
         BikeTypes type = BikeTypes.from(bikeType);
         this.bikeType = type;
         this.replacementValue = replacementValue;
-        ExistingBikeTypes.putIfAbsent(type, this);
+        Controller.addBikeType(this);
     }
 
     public BigDecimal getReplacementValue() {
         return this.replacementValue;
     }
 
-    public static BigDecimal getReplacementValue(BikeTypes bikeType) {
-        return getBikeType(bikeType).getReplacementValue();
-    }
-
     public BikeTypes getBikeType() {
         return this.bikeType;
     }
 
-    public static HashMap<BikeTypes, BikeType> getExistingBikeTypes() {
-        return ExistingBikeTypes;
-    }
 
-    public static BikeType getBikeType(BikeTypes bikeType) {
-        return ExistingBikeTypes.get(bikeType);
-    }
 }

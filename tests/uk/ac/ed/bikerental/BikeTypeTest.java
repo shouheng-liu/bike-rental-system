@@ -3,7 +3,6 @@ package uk.ac.ed.bikerental;
 
 import groovy.json.JsonOutput;
 import org.junit.jupiter.api.*;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 
@@ -17,21 +16,30 @@ public class BikeTypeTest {
     public void testCreation() {
         BikeTypes type = BikeTypes.from(
                 "mountainBike");
-        BigDecimal storedReplacementValue = BikeType.getReplacementValue(type);
-        assertEquals(storedReplacementValue.stripTrailingZeros(),
-                replacementValue.stripTrailingZeros());
-        System.out.println(BikeType.getExistingBikeTypes());
-
+        BigDecimal storedReplacementValue = bikeType.getReplacementValue();
+        assertEquals(replacementValue.stripTrailingZeros(),
+                storedReplacementValue.stripTrailingZeros());
     }
+
     @Test
-    public void testHashMap() {
-        HashMap<BikeTypes, BikeType> ExistingBikeTypes = new HashMap<BikeTypes, BikeType>();
-        ExistingBikeTypes.putIfAbsent(BikeTypes.from("mountainBike"), bikeType);
-        System.out.println(ExistingBikeTypes);
-        assertEquals(ExistingBikeTypes, BikeType.getExistingBikeTypes());
+    public void testSpelling() {
+        assertThrows(RuntimeException.class, () -> //check that bikeType is in enumeration
+        {new BikeType("MOUTAGNAD", replacementValue); });
     }
 
+    @Test
+    public void testControllerHashmap() {
+        BikeTypes type = BikeTypes.from(
+                "mountainBike");
+        new BikeType("mountainBike", BigDecimal.valueOf(1200.0));
+        BikeType hashmapBikeType = Controller.getBikeType(type); //Check that first registered
+        // bike type value is the final one
+        assertEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
+        BikeTypes type2 = BikeTypes.from("eBike");
+        new BikeType("eBike", BigDecimal.valueOf(900.0));
+        hashmapBikeType = Controller.getBikeType(type2);
+        assertNotEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
 
-
+    }
 
 }

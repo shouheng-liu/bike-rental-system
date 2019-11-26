@@ -11,26 +11,31 @@ public class Bike {
     private BikeTypes bikeType;
     private int identifier;
     private Location returnLocation;
-    private BigDecimal price;
 
-    public Bike(BikeTypes bikeType, Location returnLocation,
-                BigDecimal price) {
-        identifierCount++;
-        this.identifier = identifierCount;
+    public Bike(BikeTypes bikeType, Location returnLocation) {
+
+        if (Controller.getBikeType(bikeType) == null) {
+            throw new RuntimeException("Bike type not registered. Register it first, then try " +
+                    "again.");
+        }
         this.bikeState = BikeState.from("inShop");
         this.bikeType = bikeType;
         this.returnLocation = returnLocation;
-        this.price = price;
-
         this.manufacturingDate = LocalDate.now();
+        identifierCount++;
+        this.identifier = identifierCount;
     }
 
     public BikeType getType() {
         // TODO: Implement Bike.getType
-        return BikeType.getBikeType(this.bikeType);
+        return Controller.getBikeType(this.bikeType);
     }
 
     public LocalDate getManufacturingDate() {
-        return manufacturingDate;
+        return this.manufacturingDate;
+    }
+
+    public BigDecimal getReplacementValue() {
+        return this.getType().getReplacementValue();
     }
 }

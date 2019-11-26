@@ -3,7 +3,6 @@ package uk.ac.ed.bikerental;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-
 public class PricingPolicyTests {
     // You can add attributes here
 

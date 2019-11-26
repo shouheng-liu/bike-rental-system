@@ -9,6 +9,8 @@ public class LinearDepreciation implements ValuationPolicy {
     private BigDecimal depreciationRate = BigDecimal.valueOf(0.0);
 
     public LinearDepreciation(BigDecimal depreciationRate) {
+        assert depreciationRate.compareTo(BigDecimal.ONE) <= 0;
+        assert depreciationRate.compareTo(BigDecimal.ZERO) >= 0;
         this.depreciationRate = depreciationRate;
     }
 
@@ -17,9 +19,10 @@ public class LinearDepreciation implements ValuationPolicy {
     }
 
     public BigDecimal getDepreciationRate() {
-        return depreciationRate;
+        return this.depreciationRate;
     }
 
+    @Override
     public BigDecimal calculateValue(Bike bike, LocalDate date){
         BigDecimal age =
                 BigDecimal.valueOf(new DateRange(bike.getManufacturingDate(), date).toYears());

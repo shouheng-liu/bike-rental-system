@@ -7,6 +7,8 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
     private BigDecimal depreciationRate = BigDecimal.valueOf(0.0);
 
     public DoubleBalanceDepreciation(BigDecimal depreciationRate) {
+        assert depreciationRate.compareTo(BigDecimal.ONE) <= 0;
+        assert depreciationRate.compareTo(BigDecimal.ZERO) >= 0;
         this.depreciationRate = depreciationRate;
     }
 
@@ -18,6 +20,7 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
         return depreciationRate;
     }
 
+    @Override
     public BigDecimal calculateValue(Bike bike, LocalDate date){
         BigDecimal age =
                 BigDecimal.valueOf(new DateRange(bike.getManufacturingDate(), date).toYears());
@@ -28,11 +31,12 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
         depreciationFactor = depreciationFactor.pow(age.intValue());
         BigDecimal adjustedReplacementValue = replacementValue.multiply(depreciationFactor);
 
-        if (adjustedReplacementValue.compareTo(BigDecimal.ZERO) >= 0) {
+        if (adjustedReplacementValue.compareTo(BigDecimal.ZERO) > 0) {
             return adjustedReplacementValue;
         }
         else {
-            throw new RuntimeException("Replacement value negative.");
+            throw new RuntimeException("Replacement value negative or zero. Try to set a lower " +
+                    "depreciation rate or replace the bike.");
         }
     }
 }
