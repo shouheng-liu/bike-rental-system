@@ -11,8 +11,9 @@ public class Bike implements Deliverable {
     private int identifier;
     private Location returnLocation;
     private BigDecimal dailyPrice;
+    private String providerName;
 
-    public Bike(BikeTypes bikeType, Location returnLocation) {
+    public Bike(BikeTypes bikeType, Location returnLocation, String providerName) {
 
         if (Controller.getBikeType(bikeType) == null) {
             throw new RuntimeException("Bike type not registered. Register it first, then try " +
@@ -23,6 +24,7 @@ public class Bike implements Deliverable {
         this.returnLocation = returnLocation;
         this.manufacturingDate = LocalDate.now();
         this.identifier = Controller.getIdentifierCount();
+        this.providerName = providerName;
         Controller.setIdentifierCount(this.identifier + 1);
     }
 
@@ -36,6 +38,10 @@ public class Bike implements Deliverable {
 
     public int getIdentifier() {
         return identifier;
+    }
+
+    public String getProviderName() {
+        return this.providerName;
     }
 
     public BigDecimal getReplacementValue() {

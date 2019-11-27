@@ -3,6 +3,7 @@ package uk.ac.ed.bikerental;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;

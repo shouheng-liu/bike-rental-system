@@ -24,9 +24,10 @@ public class BookingController {
     public static Booking getBooking(int orderNumber) {
         for (Booking booking : currentBookings) {
             if (booking.getPaymentInfo().getOrderNumber() == orderNumber) {
-
+                return booking;
             }
         }
+        return null;
     }
 
     public static int getOrderCount() {

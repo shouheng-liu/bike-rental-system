@@ -15,13 +15,23 @@ public class Provider {
     private Location address;
     private BigDecimal depositRate;
     private ArrayList<Provider> partners = new ArrayList<Provider>();
-    private ValuationPolicy valuationPolicy = new BasicValuation();
+    private ValuationPolicy valuationPolicy;
     private PricingPolicy pricingPolicy = new BasicPricing(this);
+
 
     public Provider(Location shopLocation, String name, BigDecimal depositRate) {
         this.name = name;
         this.address = shopLocation;
         this.depositRate = depositRate;
+        this.valuationPolicy = new BasicValuation();
+        Controller.addProvider(this);
+    }
+    public Provider(Location shopLocation, String name, BigDecimal depositRate,
+                    ValuationPolicy valuationPolicy) {
+        this.name = name;
+        this.address = shopLocation;
+        this.depositRate = depositRate;
+        this.valuationPolicy = valuationPolicy;
         Controller.addProvider(this);
     }
 
@@ -57,6 +67,9 @@ public class Provider {
         return this.availableBikes.get(type);
     }
 
+    public String getName() {
+        return this.name;
+    }
 
     public void addBikes(BikeTypes bikeType, int amount) {
         if (!this.ownedBikes.containsKey(bikeType)) {
@@ -65,7 +78,7 @@ public class Provider {
         }
         int i;
         for (i = 0; i < amount; i++) {
-            Bike newBike = new Bike(bikeType, this.address);
+            Bike newBike = new Bike(bikeType, this.address, this.name);
             this.getOwnedBikesOfType(bikeType).add(newBike);
             this.getAvailableBikesOfType(bikeType).add(newBike);
         }
@@ -99,7 +112,7 @@ public class Provider {
         }
     }
 
-    public ArrayList<Integer> recordBikeReturn(HashMap<BikeTypes, ArrayList<Bike>> returnedBikes) {
+    private void recordBikeReturn(HashMap<BikeTypes, ArrayList<Bike>> returnedBikes) {
         ArrayList<Integer> ids = new ArrayList<Integer>();
         for (BikeTypes type : returnedBikes.keySet()) {
             this.getAvailableBikesOfType(type).addAll(returnedBikes.get(type));
@@ -108,9 +121,24 @@ public class Provider {
                 ids.add(bike.getIdentifier());
             }
         }
-        return ids;
     }
 
-
-
+    public void registerReturn(ArrayList<Bike> returnedBikes) {
+        String providerName = returnedBikes.get(0).getProviderName();
+        if (providerName.equals(this.name)) {
+            for (Bike bike : returnedBikes) {
+                availableBikes.get(bike.getType().getBikeType()).add(bike);
+            }
+        } else {
+            for (Provider partner : this.partners) {
+                if (partner.getName().equals(providerName)) {
+                    DeliveryService deliveryService = DeliveryServiceFactory.getDeliveryService();
+                    for (Deliverable bike : returnedBikes) {
+                        deliveryService.scheduleDelivery(bike, this.address,
+                                partner.getAddress(), LocalDate.now());
+                    }
+                }
+            }
+        }
+    }
 }
