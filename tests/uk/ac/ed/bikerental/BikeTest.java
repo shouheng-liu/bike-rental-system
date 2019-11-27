@@ -31,7 +31,7 @@ class BikeTest {
     @Test
     public void testUniqueID() {
         Bike otherBike = new Bike(BikeTypes.MOUNTAINBIKE, this.provider.getAddress(),
-                this.provider.getName());;
+                this.provider.getName());
         assertNotEquals(mountainBike.getIdentifier(), otherBike.getIdentifier());
     }
 

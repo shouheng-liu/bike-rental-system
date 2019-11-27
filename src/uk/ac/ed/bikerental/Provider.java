@@ -86,6 +86,7 @@ public class Provider {
                 BigDecimal.valueOf(10));
     }
 
+
     public ArrayList<Bike> getBikes(HashMap<BikeTypes, Integer> requestedBikes) {
         ArrayList<Bike> bikes = new ArrayList<Bike>();
 
@@ -113,12 +114,12 @@ public class Provider {
     }
 
     private void recordBikeReturn(HashMap<BikeTypes, ArrayList<Bike>> returnedBikes) {
-        ArrayList<Integer> ids = new ArrayList<Integer>();
+        //ArrayList<Integer> ids = new ArrayList<Integer>();
         for (BikeTypes type : returnedBikes.keySet()) {
             this.getAvailableBikesOfType(type).addAll(returnedBikes.get(type));
             for (Bike bike : this.getAvailableBikesOfType(type)) {
                 bike.setBikeState(BikeState.INSHOP);
-                ids.add(bike.getIdentifier());
+                //ids.add(bike.getIdentifier());
             }
         }
     }
@@ -127,7 +128,7 @@ public class Provider {
         String providerName = returnedBikes.get(0).getProviderName();
         if (providerName.equals(this.name)) {
             for (Bike bike : returnedBikes) {
-                availableBikes.get(bike.getType().getBikeType()).add(bike);
+                this.availableBikes.get(bike.getType().getBikeType()).add(bike);
             }
         } else {
             for (Provider partner : this.partners) {
