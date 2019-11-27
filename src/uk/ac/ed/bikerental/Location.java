@@ -14,8 +14,8 @@ public class Location {
         // TODO: Implement Location.isNearTo
         String input1 = this.postcode;
         String input2 = other.postcode;
-        String firstTwoChars1 = "";
-        String firstTwoChars2 = "";
+        //String firstTwoChars1 = "";
+        //String firstTwoChars2 = "";
 
 
         if ((firstTwoChars(input1)).equals(firstTwoChars(input2))) {
