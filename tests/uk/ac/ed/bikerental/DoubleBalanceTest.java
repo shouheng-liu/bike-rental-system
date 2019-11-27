@@ -14,21 +14,25 @@ public class DoubleBalanceTest {
     BigDecimal depreciationRate;
     LocalDate[] dates = new LocalDate[3];
     Bike bike;
-    //BigDecimal replacementValue = BigDecimal.valueOf(900.0);
+    BigDecimal replacementValue = BigDecimal.valueOf(900.0);
+    BikeType bikeType = new BikeType("mountainBike", replacementValue);
 
 
     @BeforeEach
     void setUp() throws Exception {
         // Put setup here
-        //new BikeType("mountainBike", replacementValue);
-        Location locationDummy = new Location("EH1 1LY", "Cowgate");
-        bike = new Bike(BikeTypes.from("mountainBike"), locationDummy);
+        Location locationDummy = new Location("EH1 5LY", "Cowgate");
+        Provider provider = new Provider(locationDummy, "Cheap bikes", BigDecimal.valueOf(0.2));
+        bike = new Bike(BikeTypes.MOUNTAINBIKE, provider.getAddress(), provider.getName());
         depreciationRate = BigDecimal.valueOf(1.0/10.0);
         dates[0] = LocalDate.now();
         dates[1] = LocalDate.now().plusYears(3);
         dates[2] = LocalDate.now().plusDays(10);
     }
 
+    /*
+    We quickly check that the depreciation rate is a percentage value.
+     */
     @Test
     public void testIfPercentage() {
 
@@ -38,20 +42,29 @@ public class DoubleBalanceTest {
         {new DoubleBalanceDepreciation(BigDecimal.valueOf(-10.0)); });
     }
 
+    /*
+    Under Double balance depreciation, the replacement value of the bike in the first year should
+     be equal to its initial replacement value.
+     */
     @Test
-    public void testDepreciation() {
+    public void testDepreciationIsOriginal() {
         ValuationPolicy doubleBalancePolicy = new DoubleBalanceDepreciation(depreciationRate);
         assertEquals(doubleBalancePolicy.calculateValue(bike, dates[0]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
-        System.out.println(new DateRange(bike.getManufacturingDate(), dates[1]).toYears());
-        System.out.println(bike.getType().getReplacementValue());
-        System.out.println(doubleBalancePolicy.calculateValue(bike,dates[1]));
-        assertEquals(BigDecimal.valueOf(460.8).stripTrailingZeros(),
-                doubleBalancePolicy.calculateValue(bike, dates[1]).stripTrailingZeros());
         assertEquals(doubleBalancePolicy.calculateValue(bike, dates[2]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
-
-
-
     }
+
+    /*
+    After three years, the value of a bike worth 900 pounds initially is 900*(1-2*0.1)^3 = 460.8
+    pounds. Demonstrated in second test.
+     */
+    @Test
+    public void testDepreciation() {
+        ValuationPolicy doubleBalancePolicy = new DoubleBalanceDepreciation(depreciationRate);
+        assertEquals(BigDecimal.valueOf(460.8).stripTrailingZeros(),
+                doubleBalancePolicy.calculateValue(bike, dates[1]).stripTrailingZeros());
+    }
+
+
 }

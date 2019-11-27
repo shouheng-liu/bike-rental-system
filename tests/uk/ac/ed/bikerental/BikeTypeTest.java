@@ -20,11 +20,13 @@ public class BikeTypeTest {
                 storedReplacementValue.stripTrailingZeros());
     }
 
+
     @Test
     public void testSpelling() {
-        assertThrows(RuntimeException.class, () -> //check that bikeType is in enumeration
+        assertThrows(RuntimeException.class, () ->
         {new BikeType("MOUTAGNAD", replacementValue); });
     }
+
 
     @Test
     public void testControllerHashmap() {

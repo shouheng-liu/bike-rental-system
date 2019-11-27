@@ -2,7 +2,6 @@ package uk.ac.ed.bikerental;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
-import javax.sound.sampled.Line;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,8 +16,9 @@ public class LinearDepreciationTests {
     void setUp() throws Exception {
         // Put setup here
         new BikeType("mountainBike", replacementValue);
-        Location locationDummy = new Location("EH1 1LY", "Cowgate");
-        bike = new Bike(BikeTypes.from("mountainBike"), locationDummy);
+        Location locationDummy = new Location("EH1 9LY", "London");
+        Provider provider = new Provider(locationDummy, "Cheap bikes", BigDecimal.valueOf(0.2));
+        bike = new Bike(BikeTypes.MOUNTAINBIKE, provider.getAddress(), provider.getName());
         depreciationRate = BigDecimal.valueOf(1.0/10.0);
         dates[0] = LocalDate.now();
         dates[1] = LocalDate.now().plusYears(3);
@@ -28,6 +28,9 @@ public class LinearDepreciationTests {
     
     // TODO: Write tests for valuation policies
 
+    /*
+    We quickly check that the depreciation rate is a percentage value.
+     */
     @Test
     public void testIfPercentage() {
 
@@ -37,6 +40,17 @@ public class LinearDepreciationTests {
         {new LinearDepreciation(BigDecimal.valueOf(-10.0)); });
     }
 
+    /*
+    Under linear depreciation, the replacement value of the bike in the first year should
+     be equal to its initial replacement value. Demonstrated in first and third test.
+
+     After three years, the value of a bike worth 900 pounds initially is 900 - 3*0.1*900 = 630
+      pounds. Demonstrated in second test.
+
+     Under linear depreciation, we can have negative replacement values when more than ten years
+     have past. Therefore, our system throws an exception if the replacement value is negative.
+     Last test.
+     */
     @Test
     public void testDepreciation() {
         ValuationPolicy linearPolicy = new LinearDepreciation(depreciationRate);

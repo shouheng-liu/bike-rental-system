@@ -3,11 +3,9 @@ package uk.ac.ed.bikerental;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class FindQuoteTest {
@@ -23,6 +21,7 @@ public class FindQuoteTest {
         this.customer2 = new Customer(closeLocation);
         this.customer3 = new Customer(farAwayLocation);
         this.provider = new Provider(closeLocation, "Dummy", BigDecimal.valueOf(0.2));
+        new BikeType("mountainBike", BigDecimal.valueOf(900));
         new BikeType("eBike", BigDecimal.valueOf(1230.0));
         this.provider.addBikes(BikeTypes.EBIKE, 3);
         this.provider.addBikes(BikeTypes.MOUNTAINBIKE, 8);
@@ -30,6 +29,13 @@ public class FindQuoteTest {
         this.provider.setValuationPolicy(valuationPolicy);
     }
 
+    /*
+    5 mountainbikes, each 900 pounds, where the deposit for each, under a 20% deposit rate and a
+    depreciation rate
+     of 10% leads, for double balance depreciation (with three years of depreciation) to 92.16 as
+     deposit.
+     3 e-bikes, each 1230 pounds, leads with same rates to
+     */
     @Test
     public void testFindQuote() {
         HashMap<BikeTypes, Integer> desiredBikes = new HashMap<>();

@@ -47,7 +47,12 @@ public class Controller {
                 ArrayList<Bike> bikesForQuote;
                 boolean flag = true;
                 for (BikeTypes type : desiredBikes.keySet()) {
-                    if (provider.getAvailableBikesOfType(type).size() < desiredBikes.get(type)) {
+                    if (provider.getAvailableBikesOfType(type) == null) {
+                        flag = false;
+                        break;
+                    }
+                    int noAvailableBikes = provider.getAvailableBikesOfType(type).size();
+                    if (noAvailableBikes < desiredBikes.get(type)) {
                         flag = false;
                         break;
                     }
