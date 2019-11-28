@@ -59,11 +59,9 @@ public class Provider {
         this.depositRate = depositRate;
     }
 
-    /* not sure if we will use method below
-        public void setRentalPrice(BikeTypes type, BigDecimal price) {
+    public void setRentalPrice(BikeTypes type, BigDecimal price) {
             this.rentalPrices.put(type, price);
         }
-    */
     public Location getAddress() {
         return this.address;
     }
@@ -74,6 +72,14 @@ public class Provider {
 
     public ArrayList<Bike> getAvailableBikesOfType(BikeTypes type) {
         return this.availableBikes.get(type);
+    }
+
+    public HashMap<BikeTypes, ArrayList<Bike>> getAvailableBikes() {
+        return availableBikes;
+    }
+
+    public HashMap<BikeTypes, ArrayList<Bike>> getOwnedBikes() {
+        return ownedBikes;
     }
 
     public String getName() {

@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LinearDepreciationTests {
     // You can add attributes here
@@ -45,6 +44,8 @@ public class LinearDepreciationTests {
         {
             new LinearDepreciation(BigDecimal.valueOf(-10.0));
         });
+        new LinearDepreciation(BigDecimal.valueOf(0));
+        new LinearDepreciation(BigDecimal.valueOf(1));
     }
 
     /*

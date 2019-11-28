@@ -57,12 +57,13 @@ public class FindQuoteTest {
     depreciation rate of 10% leads, for double balance depreciation (with three years of
     depreciation) to 460.8 as deposit.
      3 e-bikes, each 1230 pounds, leads with same rates to a 377.86 pound deposit. So 838.66
-     pounds as deposit, and 800 pounds as price under a daily pricing of 10 pounds for each bike
+     pounds as deposit, and 800 pounds as price under a daily pricing of 10 pounds for each bike.
      */
     @Test
     public void testPricing() {
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
                 this.customer.getLocation(), true);
+        System.out.println(quotes.get(0).price.stripTrailingZeros());
         assertEquals(BigDecimal.valueOf(1638.66).stripTrailingZeros(),
                 quotes.get(0).total.stripTrailingZeros());
         assertEquals(BigDecimal.valueOf(800.0).stripTrailingZeros(),

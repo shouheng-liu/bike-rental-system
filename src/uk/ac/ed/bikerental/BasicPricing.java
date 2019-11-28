@@ -16,6 +16,7 @@ public class BasicPricing implements PricingPolicy {
         for (Bike bike : this.provider.getOwnedBikesOfType(bikeType.getBikeType())) {
             bike.setDailyPrice(dailyPrice);
         }
+        this.provider.setRentalPrice(bikeType.getBikeType(), dailyPrice);
     }
 
     @Override

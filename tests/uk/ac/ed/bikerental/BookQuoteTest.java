@@ -9,13 +9,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookQuoteTest {
 
     LocalDate bookingDate;
-    Location closeLocation, farAwayLocation;
-    Customer customer, customer2, customer3;
+    Location closeLocation;
+    Customer customer;
     Provider provider, provider2;
     DateRange dateRange;
     ArrayList<Quote> quotes;
@@ -24,10 +24,7 @@ public class BookQuoteTest {
     @BeforeEach
     void setUp() {
         this.closeLocation = new Location("EH1 1LY", "Cowgate");
-        this.farAwayLocation = new Location("TW6 1EW", "Inner Ring E");
         this.customer = new Customer(closeLocation);
-        this.customer2 = new Customer(closeLocation);
-        this.customer3 = new Customer(farAwayLocation);
         this.provider = new Provider(closeLocation, "Dummy", BigDecimal.valueOf(0.2));
         ValuationPolicy valuationPolicy = new LinearDepreciation(BigDecimal.valueOf(0.1));
         this.provider2 = new Provider(this.closeLocation, "Best deals in Edinbraaa",
@@ -49,8 +46,12 @@ public class BookQuoteTest {
         this.dateRange = new DateRange(this.bookingDate, this.bookingDate.plusDays(10));
     }
 
+    /*
+    Need to delete created providers, since otherwise we would have different amount of quotes
+    when generated.
+     */
     @AfterEach
-    public void restoreStartState() {
+    public void deleteProviders() {
         Controller.getProviders().clear();
     }
 
@@ -68,6 +69,32 @@ public class BookQuoteTest {
         assertEquals(chosenQuote, chosenBooking);
     }
 
+    @Test
+    public void correctBikesRemoved() {
+        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
+                this.customer.getLocation(),
+                false);
+        Quote chosenQuote = this.quotes.get(0);
+        BookingController.bookQuote(chosenQuote, this.customer);
+        Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
+        Booking chosenBooking = BookingController.getBooking(orderInfo.getOrderNumber());
+        ArrayList<Bike> chosenBikes = chosenBooking.bikes;
+        Provider originalProvider = chosenBooking.provider;
+        ArrayList<Bike> allBikesProvider = new ArrayList<>();
+        ArrayList<Bike> availableBikesProvider = new ArrayList<>();
+        for (BikeTypes type : originalProvider.getOwnedBikes().keySet()) {
+            allBikesProvider.addAll(originalProvider.getOwnedBikesOfType(type));
+        }
+        for (BikeTypes type : originalProvider.getOwnedBikes().keySet()) {
+            availableBikesProvider.addAll(originalProvider.getAvailableBikesOfType(type));
+        }
+        for (Bike bike : chosenBikes) {
+            assertTrue(allBikesProvider.contains(bike));
+            assertFalse(availableBikesProvider.contains(bike));
+        }
+    }
+
+    //check that bikes in delivery queue
     @Test
     public void testDelivery() {
         DeliveryServiceFactory.setupMockDeliveryService();
