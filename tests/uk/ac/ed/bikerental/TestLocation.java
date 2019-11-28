@@ -23,6 +23,11 @@ class TestLocation {
     }
     
     @Test
+    void testFirstTwoChars() {
+    	assertEquals("EH", Location.firstTwoChars(this.location1.getPostcode()));
+    }
+    
+    @Test
     void testIsNearToTrue() {
         assertTrue(this.location1.isNearTo(location2));
     }

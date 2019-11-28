@@ -34,12 +34,12 @@ class TestDateRange {
 
     @Test
     void testOverlapsTrue() {
-        assertEquals(true, this.dateRange1.overlaps(dateRange2));
+        assertTrue(this.dateRange1.overlaps(dateRange2));
     }
 
     @Test
     void testOverlapsFalse() {
-        assertEquals(false, this.dateRange1.overlaps(dateRange3));
+        assertFalse(this.dateRange1.overlaps(dateRange3));
     }
 
     @Test
