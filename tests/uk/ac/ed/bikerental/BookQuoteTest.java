@@ -69,6 +69,9 @@ public class BookQuoteTest {
         assertEquals(chosenQuote, chosenBooking);
     }
 
+    /**
+     * Tests that correct numbers for each types of bikes are removed
+     */
     @Test
     public void correctBikesRemoved() {
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,

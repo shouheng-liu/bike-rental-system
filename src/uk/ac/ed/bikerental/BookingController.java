@@ -6,6 +6,10 @@ public class BookingController {
     private static final ArrayList<Booking> currentBookings = new ArrayList<>();
     static int orderCount;
 
+    /**
+     * Generate booking and schedule delivery if required, then returns the payment information
+     * for the customer
+     */
     public static Payment bookQuote(Quote quote, Customer customer) {
         Booking booking = new Booking(quote, customer);
         if (booking.getAddressDelivery()) {
@@ -22,6 +26,9 @@ public class BookingController {
         return booking.getPaymentInfo();
     }
 
+    /**
+     * Return the booking that matches the unique booking number.
+     */
     public static Booking getBooking(int orderNumber) {
         for (Booking booking : currentBookings) {
             if (booking.getPaymentInfo().getOrderNumber() == orderNumber) {
