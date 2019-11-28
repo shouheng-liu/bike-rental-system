@@ -1,6 +1,7 @@
 package uk.ac.ed.bikerental;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -19,10 +20,11 @@ public class BasicPricing implements PricingPolicy {
      */
     @Override
     public void setDailyRentalPrice(BikeType bikeType, BigDecimal dailyPrice) {
-        for (Bike bike : this.provider.getOwnedBikesOfType(bikeType.getBikeType())) {
+        this.provider.setRentalPrice(bikeType.getBikeType(), dailyPrice);
+        ArrayList<Bike> bikes = this.provider.getOwnedBikesOfType(bikeType.getBikeType());
+        for (Bike bike : bikes) {
             bike.setDailyPrice(dailyPrice);
         }
-        this.provider.setRentalPrice(bikeType.getBikeType(), dailyPrice);
     }
 
     /**

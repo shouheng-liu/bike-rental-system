@@ -27,15 +27,17 @@ public class PricingPolicyTests {
         this.provider = new Provider(new Location("EH1 1LY", "Cowgate"),"Deal dilly",
                 BigDecimal.valueOf(0.2));
         this.pricingPolicy = new BasicPricing(this.provider);
-        
-        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(BikeTypes.EBIKE), BigDecimal.valueOf(10.00));
-        //this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(BikeTypes.MOUNTAINBIKE), BigDecimal.valueOf(15.00));
-        //this.provider.setRentalPrice(BikeTypes.EBIKE, BigDecimal.valueOf(0.00));
-        //this.provider.setRentalPrice(BikeTypes.MOUNTAINBIKE, BigDecimal.valueOf(0.00));
+
+
+
         this.provider.addBikes(BikeTypes.EBIKE, 3);
-        //this.provider.addBikes(BikeTypes.MOUNTAINBIKE, 5);
+        this.provider.addBikes(BikeTypes.MOUNTAINBIKE, 5);
         this.bikes.addAll(this.provider.getAvailableBikesOfType(BikeTypes.EBIKE));
-        //this.bikes.addAll(this.provider.getAvailableBikesOfType(BikeTypes.MOUNTAINBIKE));
+        this.bikes.addAll(this.provider.getAvailableBikesOfType(BikeTypes.MOUNTAINBIKE));
+        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(BikeTypes.EBIKE),
+                BigDecimal.valueOf(10.00));
+        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(BikeTypes.MOUNTAINBIKE),
+                BigDecimal.valueOf(15.00));
         dateRange1 = new DateRange(LocalDate.now(), LocalDate.now().plusDays(5));
         dateRange2 = new DateRange(LocalDate.now(), LocalDate.now().plusDays(5));
         dateRange3 = new DateRange(LocalDate.now(), LocalDate.now().plusDays(5));
