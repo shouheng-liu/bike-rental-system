@@ -54,28 +54,38 @@ public class ReturnBikesTest {
         Controller.getProviders().clear();
     }
 
+    /*
+    We check if a return to the original provider registers the bikes again. Therefore, we first
+    book a quote and then call registerReturn() to return the bikes. We check if the bikes in the
+     booking are back in the list of available bikes.
+     */
     @Test
     public void testReturnOriginal() {
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
                 this.customer.getLocation(),
                 false);
         Quote chosenQuote = this.quotes.get(0);
-        ArrayList<Bike> chosenBikes = chosenQuote.getBikes();
         ArrayList<Bike> availableBikesProvider = new ArrayList<>();
         Provider originalProvider = chosenQuote.provider;
 
         Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
+        ArrayList<Bike> bookedBikes = BookingController.getBooking(orderInfo.getOrderNumber()).bikes;
         assertTrue(originalProvider.registerReturn(orderInfo.getOrderNumber()));
         for (BikeTypes type : originalProvider.getOwnedBikes().keySet()) {
             availableBikesProvider.addAll(originalProvider.getAvailableBikesOfType(type));
         }
-        for (Bike bike : chosenBikes) {
+        for (Bike bike : bookedBikes) {
             assertTrue(availableBikesProvider.contains(bike));
         }
     }
 
 
-    // need to call drop off on MockDeliveryService to finalize
+    /*
+    Check if the the return from a partner provider to the original provider is possible.
+    Therefore, we first book a quote, register the partner provider as a partner, and then call
+    registerReturn() from the partner provider to return the bikes. We then carry out pickups and
+     dropoffs, and finally check if the bikes from the booking are in our available bike array.
+     */
     @Test
     public void testDeliveryReturn() {
         //Set up use case
@@ -108,6 +118,9 @@ public class ReturnBikesTest {
         }
     }
 
+    /*
+    If someone is trying to return bikes at a non partner provider, we throw an error.
+     */
     @Test
     public void testWrongPartner() {
         /* Set up scenario. As one might see, no partnership was registered hence we throw an

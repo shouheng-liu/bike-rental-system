@@ -67,6 +67,9 @@ public class BookQuoteTest {
         Controller.getProviders().clear();
     }
 
+    /*
+    Check if prices got transferred correctly and if booking actually inherited from the chosenQuote
+     */
     @Test
     public void testBooking() {
         assertEquals(chosenQuote.price, orderInfo.getPrice());
@@ -77,7 +80,7 @@ public class BookQuoteTest {
     }
 
     /**
-     * Tests that correct numbers for each types of bikes are removed
+     * Tests that the exact bikes listed in the booking are removed from the available bikes.
      */
     @Test
     public void correctBikesRemoved() {
@@ -99,7 +102,10 @@ public class BookQuoteTest {
         }
     }
 
-    //check that bikes in delivery queue
+    /*
+    Checks that if delivery to the customer is requested, the delivery is also scheduled for each
+    bike.
+     */
     @Test
     public void testDelivery() {
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
@@ -113,6 +119,9 @@ public class BookQuoteTest {
         }
     }
 
+    /*
+    Checks that if delivery is requested, the delivery can be scheduled for the same day.
+     */
     @Test
     public void testDeliveryToday() {
         this.bookingDate = LocalDate.now();

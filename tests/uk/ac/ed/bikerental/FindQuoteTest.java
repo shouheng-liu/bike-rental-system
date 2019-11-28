@@ -73,6 +73,10 @@ public class FindQuoteTest {
                 quotes.get(0).deposit.stripTrailingZeros());
     }
 
+    /*
+    Checks that if delivery is requested, but all providers are too far away, no quotes are
+    returned.
+     */
     @Test
     public void testFarAwayClient() {
         this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer3.getLocation(),
@@ -80,6 +84,9 @@ public class FindQuoteTest {
         assertEquals(0, this.quotes.size());
     }
 
+    /*
+    Tests if multiple matching quotes can be received.
+     */
     @Test
     public void testMultiQuotes() {
         BikeType bikeType = Controller.getBikeType(BikeTypes.EBIKE);
@@ -88,6 +95,9 @@ public class FindQuoteTest {
         assertEquals(2, this.quotes.size());
     }
 
+    /*
+    Checks if the correct number of bikes are listed in quote
+     */
     @Test
     public void testCorrectAmountBikes() {
         this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer.getLocation(),
@@ -109,12 +119,17 @@ public class FindQuoteTest {
 
     }
 
+    /*
+    Checks if only available bikes are considered for each quote. To create such scenario, we
+    first book a quote and then check again if one quote less is available.
+     */
     @Test
     public void testOnlyAvailableBikes() {
         DeliveryServiceFactory.setupMockDeliveryService();
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
                 this.customer.getLocation(),
                 true);
+        assertEquals(2, this.quotes.size());
         BookingController.bookQuote(this.quotes.get(0), this.customer);
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
                 this.customer.getLocation(),

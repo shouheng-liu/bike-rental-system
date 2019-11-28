@@ -10,6 +10,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class MockPricingTests {
 
     Provider provider;
@@ -17,6 +18,9 @@ public class MockPricingTests {
     ArrayList<Bike> bikes = new ArrayList<>();
     DateRange dateRange1, dateRange2, dateRange3;
 
+    /*
+    Setup. The initial daily price is 10 pounds for each bike type per bike.
+     */
     @BeforeEach
     void setUp() {
 
@@ -31,6 +35,10 @@ public class MockPricingTests {
         dateRange3 = new DateRange(LocalDate.now(), LocalDate.now().plusDays(30));
         this.pricingPolicy = new MockPricing(this.provider);
     }
+
+    /*
+    8 bikes in total, so 80*0.95 = 76
+     */
     @Test
     void pricing5Days() {
         assertEquals(BigDecimal.valueOf(76.00).setScale(2),
@@ -38,6 +46,9 @@ public class MockPricingTests {
                         dateRange1));
     }
 
+    /*
+    8 bikes in total, so 80*0.9 = 72
+     */
     @Test
     void pricing10Days() {
         assertEquals(BigDecimal.valueOf(72.00).setScale(2),
@@ -45,6 +56,9 @@ public class MockPricingTests {
                         dateRange2));
     }
 
+    /*
+    8 bikes in total, so 80*0.85 = 68
+     */
     @Test
     void pricing30Days() {
         assertEquals(BigDecimal.valueOf(68.00).setScale(2),
