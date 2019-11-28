@@ -14,7 +14,6 @@ public class Bike implements Deliverable {
     private Location returnLocation;
     private BigDecimal dailyPrice;
     private String providerName;
-    private OnDelivery delivery;
 
     public Bike(BikeTypes bikeType, Location returnLocation, String providerName) {
 
@@ -28,7 +27,6 @@ public class Bike implements Deliverable {
         this.manufacturingDate = LocalDate.now();
         this.identifier = Controller.getIdentifierCount();
         this.providerName = providerName;
-        this.delivery = OnDelivery.IDLE;
         Controller.setIdentifierCount(this.identifier + 1);
     }
 
@@ -71,32 +69,23 @@ public class Bike implements Deliverable {
                 bikeType == bike.bikeType &&
                 returnLocation.equals(bike.returnLocation) &&
                 Objects.equals(getDailyPrice(), bike.getDailyPrice()) &&
-                getProviderName().equals(bike.getProviderName()) &&
-                getDelivery() == bike.getDelivery();
+                getProviderName().equals(bike.getProviderName());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getBikeState(), getManufacturingDate(), bikeType, getIdentifier(),
-                returnLocation, getDailyPrice(), getProviderName(), getDelivery());
-    }
-
-    public OnDelivery getDelivery() {
-        return this.delivery;
-    }
-
-    public void setDelivery(OnDelivery delivery) {
-        this.delivery = delivery;
+                returnLocation, getDailyPrice(), getProviderName());
     }
 
     @Override
     public void onPickup() {
-        this.delivery = OnDelivery.PICKUP;
+        this.bikeState = BikeState.PICKUP;
     }
 
     @Override
     public void onDropoff() {
-        this.delivery = OnDelivery.DROPOFF;
+        this.bikeState = BikeState.DROPOFF;
     }
 
     public BikeState getBikeState() {

@@ -190,8 +190,7 @@ public class Provider {
     public void checkForDropoffs() {
         for (BikeTypes type : this.ownedBikes.keySet()) {
             for (Bike bike : this.ownedBikes.get(type)) {
-                if (bike.getDelivery() == OnDelivery.DROPOFF) {
-                    bike.setDelivery(OnDelivery.IDLE);
+                if (bike.getBikeState() == BikeState.DROPOFF) {
                     bike.setBikeState(BikeState.INSHOP);
                     availableBikes.get(type).add(bike);
                 }
