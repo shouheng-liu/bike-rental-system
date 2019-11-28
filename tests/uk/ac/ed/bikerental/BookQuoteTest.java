@@ -1,5 +1,6 @@
 package uk.ac.ed.bikerental;
 
+import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookQuoteTest {
 
+    MockDeliveryService deliveryService;
     LocalDate bookingDate;
     Location closeLocation;
     Customer customer;
@@ -20,9 +22,14 @@ public class BookQuoteTest {
     DateRange dateRange;
     ArrayList<Quote> quotes;
     HashMap<BikeTypes, Integer> desiredBikes;
+    Quote chosenQuote;
+    Payment orderInfo;
 
     @BeforeEach
     void setUp() {
+        DeliveryServiceFactory.setupMockDeliveryService();
+        this.deliveryService =
+                (MockDeliveryService) DeliveryServiceFactory.getDeliveryService();
         this.closeLocation = new Location("EH1 1LY", "Cowgate");
         this.customer = new Customer(closeLocation);
         this.provider = new Provider(closeLocation, "Dummy", BigDecimal.valueOf(0.2));
@@ -44,6 +51,11 @@ public class BookQuoteTest {
         this.desiredBikes.put(BikeTypes.MOUNTAINBIKE, 5);
         this.bookingDate = LocalDate.now().plusYears(3);
         this.dateRange = new DateRange(this.bookingDate, this.bookingDate.plusDays(10));
+        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
+                this.customer.getLocation(),
+                false);
+        this.chosenQuote = this.quotes.get(0);
+        this.orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
     }
 
     /*
@@ -57,29 +69,19 @@ public class BookQuoteTest {
 
     @Test
     public void testBooking() {
-        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
-                this.customer.getLocation(),
-                false);
-        Quote chosenQuote = this.quotes.get(0);
-        Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
         assertEquals(chosenQuote.price, orderInfo.getPrice());
         assertEquals(chosenQuote.deposit, orderInfo.getDeposit());
         assertEquals(chosenQuote.total, orderInfo.getTotal());
-        Booking chosenBooking = BookingController.getBooking(orderInfo.getOrderNumber());
-        assertEquals(chosenQuote, chosenBooking);
+        Booking booking = BookingController.getBooking(orderInfo.getOrderNumber());
+        assertEquals(chosenQuote, booking);
     }
 
     @Test
     public void correctBikesRemoved() {
-        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
-                this.customer.getLocation(),
-                false);
-        Quote chosenQuote = this.quotes.get(0);
-        BookingController.bookQuote(chosenQuote, this.customer);
         Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
-        Booking chosenBooking = BookingController.getBooking(orderInfo.getOrderNumber());
-        ArrayList<Bike> chosenBikes = chosenBooking.bikes;
-        Provider originalProvider = chosenBooking.provider;
+        Booking booking = BookingController.getBooking(orderInfo.getOrderNumber());
+        ArrayList<Bike> chosenBikes = booking.bikes;
+        Provider originalProvider = booking.provider;
         ArrayList<Bike> allBikesProvider = new ArrayList<>();
         ArrayList<Bike> availableBikesProvider = new ArrayList<>();
         for (BikeTypes type : originalProvider.getOwnedBikes().keySet()) {
@@ -97,12 +99,29 @@ public class BookQuoteTest {
     //check that bikes in delivery queue
     @Test
     public void testDelivery() {
-        DeliveryServiceFactory.setupMockDeliveryService();
         this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
                 this.customer.getLocation(),
                 true);
         Quote chosenQuote = this.quotes.get(0);
-        BookingController.bookQuote(chosenQuote, this.customer);
+        Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
+        Booking booking = BookingController.getBooking(orderInfo.getOrderNumber());
+        for (Bike bike : booking.getBikes()) {
+            assertTrue(deliveryService.pickups.get(this.bookingDate).contains(bike));
+        }
+    }
 
+    @Test
+    public void testDeliveryToday() {
+        this.bookingDate = LocalDate.now();
+        this.dateRange = new DateRange(this.bookingDate, this.bookingDate.plusDays(10));
+        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
+                this.customer.getLocation(),
+                true);
+        Quote chosenQuote = this.quotes.get(0);
+        Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
+        Booking booking = BookingController.getBooking(orderInfo.getOrderNumber());
+        for (Bike bike : booking.getBikes()) {
+            assertTrue(deliveryService.pickups.get(this.bookingDate).contains(bike));
+        }
     }
 }

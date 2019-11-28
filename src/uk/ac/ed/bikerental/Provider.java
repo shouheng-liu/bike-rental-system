@@ -91,10 +91,8 @@ public class Provider {
     }
 
     public void addBikes(BikeTypes bikeType, int amount) {
-        if (!this.ownedBikes.containsKey(bikeType)) {
-            this.ownedBikes.put(bikeType, new ArrayList<Bike>());
-            this.availableBikes.put(bikeType, new ArrayList<Bike>());
-        }
+        this.ownedBikes.putIfAbsent(bikeType, new ArrayList<Bike>());
+        this.availableBikes.putIfAbsent(bikeType, new ArrayList<Bike>());
         int i;
         for (i = 0; i < amount; i++) {
             Bike newBike = new Bike(bikeType, this.address, this.name);
@@ -144,13 +142,15 @@ public class Provider {
         }
     }
 
-    public void registerReturn(int bookingNumber) { //ArrayList<Bike> returnedBikes
+    public boolean registerReturn(int bookingNumber) { //ArrayList<Bike> returnedBikes
         Booking booking = BookingController.getBooking(bookingNumber);
+        booking.setBookingStatus(BookingStates.LEASEOVER);
         String providerName = booking.provider.getName();
         if (providerName.equals(this.name)) {
             for (Bike bike : booking.getBikes()) {
                 this.availableBikes.get(bike.getType().getBikeType()).add(bike);
             }
+            return true;
         } else {
             for (Provider partner : this.partners) {
                 if (partner.getName().equals(providerName)) {
@@ -159,8 +159,11 @@ public class Provider {
                         deliveryService.scheduleDelivery(bike, this.address,
                                 partner.getAddress(), LocalDate.now());
                     }
+                    return true;
                 }
             }
+            assert false;
+            return false;
         }
     }
 

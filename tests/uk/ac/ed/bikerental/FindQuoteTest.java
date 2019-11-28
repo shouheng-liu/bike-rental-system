@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FindQuoteTest {
 
@@ -74,7 +75,6 @@ public class FindQuoteTest {
 
     @Test
     public void testFarAwayClient() {
-        DateRange dateRange = new DateRange(this.bookingDate, this.bookingDate.plusDays(10));
         this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer3.getLocation(),
                 true);
         assertEquals(0, this.quotes.size());
@@ -83,10 +83,30 @@ public class FindQuoteTest {
     @Test
     public void testMultiQuotes() {
         BikeType bikeType = Controller.getBikeType(BikeTypes.EBIKE);
-        provider2.getPricingPolicy().setDailyRentalPrice(bikeType, BigDecimal.valueOf(20));
         this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer.getLocation(),
                 true);
         assertEquals(2, this.quotes.size());
+    }
+
+    @Test
+    public void testCorrectAmountBikes() {
+        this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer.getLocation(),
+                true);
+        ArrayList<Bike> chosenBikes = this.quotes.get(0).getBikes();
+        int eBikeCount = 0;
+        int mountainCount = 0;
+        for (Bike bike : chosenBikes) {
+            if (bike.getType().getBikeType().equals(BikeTypes.MOUNTAINBIKE)) {
+                mountainCount++;
+            }
+            else {
+                eBikeCount++;
+            }
+        }
+        assertEquals(desiredBikes.get(BikeTypes.MOUNTAINBIKE), mountainCount);
+        assertEquals(desiredBikes.get(BikeTypes.EBIKE), eBikeCount);
+
+
     }
 
     @Test
@@ -101,6 +121,7 @@ public class FindQuoteTest {
                 true);
         assertEquals(1, this.quotes.size());
     }
+
 
 
 }
