@@ -3,6 +3,10 @@ package uk.ac.ed.bikerental;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Class containing a mock implementation of the delivery service
+ * Implements the interface DeliveryService
+ */
 public class MockDeliveryService implements DeliveryService {
     Map<LocalDate, Collection<Deliverable>> pickups;
     Deque<Deliverable> dropoffs;
