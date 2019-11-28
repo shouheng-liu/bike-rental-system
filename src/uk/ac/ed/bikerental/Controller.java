@@ -40,7 +40,7 @@ public class Controller {
 
     public static ArrayList<Quote> getQuotes(HashMap<BikeTypes, Integer> desiredBikes,
                                       DateRange dateRange, Location location, boolean delivery) {
-        ArrayList<Quote> quotes = new ArrayList<>();
+        ArrayList<Quote> quotes = new ArrayList<Quote>();
         for (Provider provider : providers) {
             Quote quote;
             if (location.isNearTo(provider.getAddress()) || !delivery)  {

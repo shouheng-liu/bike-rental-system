@@ -1,8 +1,10 @@
 package uk.ac.ed.bikerental;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,9 +18,11 @@ public class FindQuoteTest {
     LocalDate bookingDate;
     Location closeLocation, farAwayLocation;
     Customer customer, customer2,customer3;
-    Provider provider;
+    Provider provider, provider2;
+    DateRange dateRange;
     ArrayList<Quote> quotes;
     HashMap<BikeTypes, Integer> desiredBikes;
+
     @BeforeEach
     void setUp() {
         this.closeLocation = new Location("EH1 1LY", "Cowgate");
@@ -27,15 +31,27 @@ public class FindQuoteTest {
         this.customer2 = new Customer(closeLocation);
         this.customer3 = new Customer(farAwayLocation);
         this.provider = new Provider(closeLocation, "Dummy", BigDecimal.valueOf(0.2));
+        ValuationPolicy valuationPolicy = new LinearDepreciation(BigDecimal.valueOf(0.1));
+        this.provider2 = new Provider(this.closeLocation, "Best deals in Edinbraaa",
+                BigDecimal.valueOf(0.2), valuationPolicy);
         new BikeType("mountainBike", BigDecimal.valueOf(900));
         new BikeType("eBike", BigDecimal.valueOf(1230.0));
         this.provider.addBikes(BikeTypes.EBIKE, 3);
         this.provider.addBikes(BikeTypes.MOUNTAINBIKE, 8);
-        ValuationPolicy valuationPolicy = new DoubleBalanceDepreciation(BigDecimal.valueOf(0.1));
+        this.provider2.addBikes(BikeTypes.MOUNTAINBIKE, 10);
+        this.provider2.addBikes(BikeTypes.EBIKE, 5);
+        valuationPolicy = new DoubleBalanceDepreciation(BigDecimal.valueOf(0.1));
         this.provider.setValuationPolicy(valuationPolicy);
         this.desiredBikes = new HashMap<>();
         this.desiredBikes.put(BikeTypes.EBIKE, 3);
         this.desiredBikes.put(BikeTypes.MOUNTAINBIKE, 5);
+        this.bookingDate = LocalDate.now().plusYears(3);
+        this.dateRange = new DateRange(this.bookingDate, this.bookingDate.plusDays(10));
+    }
+
+    @AfterEach
+    public void restoreStart() {
+        Controller.getProviders().clear();
     }
 
     /*
@@ -47,9 +63,7 @@ public class FindQuoteTest {
      */
     @Test
     public void testPricing() {
-        this.bookingDate = LocalDate.now().plusYears(3);
-        DateRange dateRange = new DateRange(bookingDate, bookingDate.plusDays(10));
-        this.quotes = Controller.getQuotes(desiredBikes, dateRange,
+        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
                 this.customer.getLocation(), true);
         assertEquals(BigDecimal.valueOf(1638.66).stripTrailingZeros(),
                 quotes.get(0).total.stripTrailingZeros());
@@ -59,15 +73,32 @@ public class FindQuoteTest {
 
     @Test
     public void testFarAwayClient() {
-        DateRange dateRange = new DateRange(bookingDate, bookingDate.plusDays(10));
+        DateRange dateRange = new DateRange(this.bookingDate, this.bookingDate.plusDays(10));
         this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer3.getLocation(),
                 true);
-        System.out.println(this.quotes);
+        assertEquals(0, this.quotes.size());
     }
 
     @Test
     public void testMultiQuotes() {
-        //Provider newProvider = new Provider()
+        BikeType bikeType = Controller.getBikeType(BikeTypes.EBIKE);
+        provider2.getPricingPolicy().setDailyRentalPrice(bikeType, BigDecimal.valueOf(20));
+        this.quotes = Controller.getQuotes(desiredBikes, dateRange, this.customer.getLocation(),
+                true);
+        assertEquals(2, this.quotes.size());
+    }
+
+    @Test
+    public void testOnlyAvailableBikes() {
+        DeliveryServiceFactory.setupMockDeliveryService();
+        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
+                this.customer.getLocation(),
+                true);
+        BookingController.bookQuote(this.quotes.get(0), this.customer);
+        this.quotes = Controller.getQuotes(desiredBikes, this.dateRange,
+                this.customer.getLocation(),
+                true);
+        assertEquals(1, this.quotes.size());
     }
 
 
