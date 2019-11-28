@@ -8,6 +8,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests for BasicValuation class
+ */
 public class ValuationPolicyTests {
     // You can add attributes here
     private LocalDate date1, date2;
