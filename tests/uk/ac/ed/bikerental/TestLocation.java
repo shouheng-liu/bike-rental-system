@@ -22,13 +22,11 @@ class TestLocation {
     
     @Test
     void testIsNearToTrue() {
-        // TODO: check we can see when two date ranges overlap
-    	assertEquals(true, this.location1.isNearTo(location2));
+        assertTrue(this.location1.isNearTo(location2));
     }
 
     @Test
     void testIsNearToFalse() {
-        // TODO: check we can see when two date ranges  don't overlap
-    	assertEquals(false, this.location1.isNearTo(location3));
+        assertFalse(this.location1.isNearTo(location3));
     }
 }
