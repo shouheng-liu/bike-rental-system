@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 /**
  * Date: Nov 28-2019
  * Represents the date range between two dates.
+ * 
  * @author shouheng
  * @version 1.1
  * @since 1.0
@@ -25,6 +26,7 @@ public class DateRange {
     
     /**
      * Creates a date range with specified start date and end date and sets them.
+     * 
      * @param start	The first date of the date range.
      * @param end	The last date of the date range.
      */
@@ -35,6 +37,7 @@ public class DateRange {
     
     /**
      * Gets the start date of the date range.
+     * 
      * @return A LocalDate representing the start date of the date range.
      */
     public LocalDate getStart() {
@@ -43,6 +46,7 @@ public class DateRange {
     
     /**
      * Gets the end date of the date range.
+     * 
      * @return A LocalDate representing the last date of the date range.
      */
     public LocalDate getEnd() {
@@ -51,6 +55,7 @@ public class DateRange {
 
     /**
      * Returns the number of years between start and end date.
+     * 
      * @return A long value representing the number of years between start and end date.
      */
     public long toYears() {
@@ -59,6 +64,7 @@ public class DateRange {
 
     /**
      * Returns the number of days between start and end date.
+     * 
      * @return A long value representing the number of days between start and end date.
      */
     public long toDays() {
@@ -68,32 +74,33 @@ public class DateRange {
     /**
      * Checks whether the start date is before or on the same date as the other end date
      * and the end date is after or on the same date as the other start date.
+     * 
      * @param other	The date range that's being compare against.
      * @return A Boolean of whether the date range has any overlapping days with another date range, other.
      */
     public Boolean overlaps(DateRange other) {
-        // TODO: implement date range intersection checking
+
         int compareValueA = (this.start).compareTo(other.getEnd());
         int compareValueB = (this.end).compareTo(other.getStart());
-		/*
-		 * if (compareValueA <= 0 && compareValueB >= 0) { // if (this.start ==
-		 * other.getStart() && this.end == other.getEnd()) { return true; } else {
-		 * return false; }
-		 */
+
         return compareValueA <= 0 && compareValueB >= 0;
-        //assert false;
-        //return null;
     }
 
+    /**
+     * HashCode method allowing use in collections.
+     */
     @Override
     public int hashCode() {
-        // hashCode method allowing use in collections
+        
         return Objects.hash(end, start);
     }
 
+    /**
+     * Equals method for testing equality in tests.
+     */
     @Override
     public boolean equals(Object obj) {
-        // equals method for testing equality in tests
+        
         if (this == obj)
             return true;
         if (obj == null)
