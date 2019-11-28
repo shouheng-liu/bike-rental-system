@@ -81,10 +81,10 @@ public class ReturnBikesTest {
 
 
     /*
-    Check if the the return from a partner provider to the original provider is possible.
+    Check if the return from a partner provider to the original provider is possible.
     Therefore, we first book a quote, register the partner provider as a partner, and then call
     registerReturn() from the partner provider to return the bikes. We then carry out pickups and
-     dropoffs, and finally check if the bikes from the booking are in our available bike array.
+     dropoffs, and finally check if the bikes from the booking are back in our available bike array.
      */
     @Test
     public void testDeliveryReturn() {

@@ -14,8 +14,10 @@ class TestLocation {
     	this.location2 = new Location("EH1 1LY", "3 Robertson's Cl, Edinburgh");
     	this.location3 = new Location("SW1A 2AA", "10 Downing St, Westminster, London");
     }
-    
 
+    /*
+    Test that a postcode needs at least six characters
+     */
     @Test
     void testLocation() {
 
@@ -24,12 +26,16 @@ class TestLocation {
             new Location("NBA", "National Basketball Association");
         });
     }
-    
+
+    /*
+    Test if we can extract first two characters
+     */
     @Test
     void testFirstTwoChars() {
     	assertEquals("EH", Location.firstTwoChars(this.location1.getPostcode()));
     }
-    
+
+
     @Test
     void testIsNearToTrue() {
         assertTrue(this.location1.isNearTo(location2));
