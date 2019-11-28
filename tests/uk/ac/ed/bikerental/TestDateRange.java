@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for DateRange class
+ */
 class TestDateRange {
     private DateRange dateRange1, dateRange2, dateRange3;
 

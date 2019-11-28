@@ -3,6 +3,9 @@ package uk.ac.ed.bikerental;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+/**
+ * Tests for Location class
+ */
 class TestLocation {
 	private Location location1, location2, location3;
     @BeforeEach

@@ -59,6 +59,9 @@ public class Quote {
                 price, deposit);
     }
 
+    /**
+     * Calculate the deposit amount for bikes in an array
+     */
     public BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
         BigDecimal deposit = BigDecimal.ZERO;
         for (Bike bike : bikes) {
@@ -69,19 +72,28 @@ public class Quote {
         }
         return deposit.setScale(2, RoundingMode.CEILING);
     }
-
+    
+    /**
+     * Calculate the rent amount for bikes in an array
+     */
     public BigDecimal calculatePrice(ArrayList<Bike> bikes) {
         DateRange dateRange = new DateRange(this.bookingDate, this.returnDate);
         BigDecimal price = this.provider.getPricingPolicy().calculatePrice(bikes, dateRange);
         return price.setScale(2, RoundingMode.CEILING);
     }
-
+    
+    /**
+     * Calculate the total price which includes the deposit amount and the rent amount
+     */
     public BigDecimal calculateTotal() {
         BigDecimal total = this.deposit;
         total = total.add(this.price);
         return total.setScale(2, RoundingMode.CEILING);
     }
-
+    
+    /**
+     * Checks if customer and provider are in the same postal area
+     */
     public boolean isDeliverable(Location customerLocation, Location providerLocation) {
         return customerLocation.isNearTo(providerLocation);
     }

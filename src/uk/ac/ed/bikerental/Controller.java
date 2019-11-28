@@ -38,6 +38,9 @@ public class Controller {
         providers.remove(provider);
     }
 
+    /**
+     * Return an array of all matching quotes for bookings on a given date range specified by the customer
+     */
     public static ArrayList<Quote> getQuotes(HashMap<BikeTypes, Integer> desiredBikes,
                                              DateRange dateRange, Location location,
                                              boolean delivery) {

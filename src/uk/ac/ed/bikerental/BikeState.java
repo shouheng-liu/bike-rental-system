@@ -1,5 +1,9 @@
 package uk.ac.ed.bikerental;
 
+/**
+ * Enumeration of possible bike states
+ * Throws an exception if a bike state that's not included is called
+ */
 public enum BikeState {
 
     RENTED, INSHOP, RETURNED;

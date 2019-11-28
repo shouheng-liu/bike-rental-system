@@ -1,5 +1,9 @@
 package uk.ac.ed.bikerental;
 
+/**
+ * Enumeration of possible bike types
+ * Throws an exception if a bike type that's not included is called
+ */
 public enum BikeTypes {
 
     ROADBIKE, MOUNTAINBIKE, EBIKE, HYBRIDBIKE;

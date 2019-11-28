@@ -2,6 +2,9 @@ package uk.ac.ed.bikerental;
 
 import java.util.Objects;
 
+/**
+ * Inherits from Quote class
+ */
 public class Booking extends Quote {
 
     private boolean addressDelivery;
