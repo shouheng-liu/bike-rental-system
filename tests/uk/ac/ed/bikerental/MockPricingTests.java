@@ -10,6 +10,9 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests for MockPricing class
+ */
 public class MockPricingTests {
 
     Provider provider;
