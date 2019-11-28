@@ -15,9 +15,7 @@ public class MockPricingTests {
     Provider provider;
     PricingPolicy pricingPolicy;
     ArrayList<Bike> bikes = new ArrayList<>();
-    DateRange dateRange1;
-    DateRange dateRange2;
-    DateRange dateRange3;
+    DateRange dateRange1, dateRange2, dateRange3;
 
     @BeforeEach
     void setUp() {

@@ -41,7 +41,7 @@ class TestDateRange {
     void testOverlapsFalse() {
         assertEquals(false, this.dateRange1.overlaps(dateRange3));
     }
-    
+
     @Test
     void testToDays18() {
         assertEquals(18, this.dateRange2.toDays());
