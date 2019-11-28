@@ -3,20 +3,19 @@ package uk.ac.ed.bikerental;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
-import java.util.function.BooleanSupplier;
 
 public class DateRange {
     private LocalDate start, end;
-    
+
     public DateRange(LocalDate start, LocalDate end) {
         this.start = start;
         this.end = end;
     }
-    
+
     public LocalDate getStart() {
         return this.start;
     }
-    
+
     public LocalDate getEnd() {
         return this.end;
     }
@@ -33,12 +32,8 @@ public class DateRange {
         // TODO: implement date range intersection checking
         int compareValueA = (this.start).compareTo(other.getEnd());
         int compareValueB = (this.end).compareTo(other.getStart());
-        if (compareValueA <= 0 && compareValueB >= 0) {
         // if (this.start == other.getStart() && this.end == other.getEnd()) {
-            return true;
-        } else {
-            return false;
-        }
+        return compareValueA <= 0 && compareValueB >= 0;
         //assert false;
         //return null;
     }
@@ -61,6 +56,6 @@ public class DateRange {
         DateRange other = (DateRange) obj;
         return Objects.equals(end, other.end) && Objects.equals(start, other.start);
     }
-    
+
     // You can add your own methods here
 }

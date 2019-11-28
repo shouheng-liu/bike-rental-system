@@ -1,17 +1,9 @@
 package uk.ac.ed.bikerental;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SystemTests {
     // You can add attributes here
@@ -20,10 +12,10 @@ public class SystemTests {
     void setUp() throws Exception {
         // Setup mock delivery service before each tests
         DeliveryServiceFactory.setupMockDeliveryService();
-        
+
         // Put your test setup here
     }
-    
+
     // TODO: Write system tests covering the three main use cases
 
     @Test

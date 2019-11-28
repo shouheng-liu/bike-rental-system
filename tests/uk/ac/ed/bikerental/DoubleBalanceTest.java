@@ -25,7 +25,7 @@ public class DoubleBalanceTest {
         Provider provider = new Provider(locationDummy, "Cheap bikes", BigDecimal.valueOf(0.2));
         this.bike = new Bike(BikeTypes.MOUNTAINBIKE, provider.getAddress(), provider.getName());
         this.replacementValue = BigDecimal.valueOf(900.0);
-        this.depreciationRate = BigDecimal.valueOf(1.0/10.0);
+        this.depreciationRate = BigDecimal.valueOf(1.0 / 10.0);
         this.dates[0] = LocalDate.now();
         this.dates[1] = LocalDate.now().plusYears(3);
         this.dates[2] = LocalDate.now().plusDays(10);
@@ -38,9 +38,13 @@ public class DoubleBalanceTest {
     public void testIfPercentage() {
 
         assertThrows(AssertionError.class, () ->
-        {new DoubleBalanceDepreciation(BigDecimal.TEN); });
+        {
+            new DoubleBalanceDepreciation(BigDecimal.TEN);
+        });
         assertThrows(AssertionError.class, () ->
-        {new DoubleBalanceDepreciation(BigDecimal.valueOf(-10.0)); });
+        {
+            new DoubleBalanceDepreciation(BigDecimal.valueOf(-10.0));
+        });
     }
 
     /*

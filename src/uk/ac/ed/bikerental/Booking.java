@@ -9,22 +9,6 @@ public class Booking extends Quote {
     private Payment paymentInfo;
     private Customer customer;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Booking booking = (Booking) o;
-        return getAddressDelivery() == booking.getAddressDelivery() &&
-                bookingStatus == booking.bookingStatus &&
-                getPaymentInfo().equals(booking.getPaymentInfo()) &&
-                customer.equals(booking.customer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAddressDelivery(), bookingStatus, getPaymentInfo(), customer);
-    }
-
     public Booking(Quote quote, Customer customer) {
         super();
         this.bikes = quote.bikes;
@@ -41,6 +25,22 @@ public class Booking extends Quote {
 
         this.provider.lendBikes(this.bikes);
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Booking booking = (Booking) o;
+        return getAddressDelivery() == booking.getAddressDelivery() &&
+                bookingStatus == booking.bookingStatus &&
+                getPaymentInfo().equals(booking.getPaymentInfo()) &&
+                customer.equals(booking.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAddressDelivery(), bookingStatus, getPaymentInfo(), customer);
     }
 
     public boolean getAddressDelivery() {

@@ -2,7 +2,6 @@ package uk.ac.ed.bikerental;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
 
 public class LinearDepreciation implements ValuationPolicy {
 
@@ -14,16 +13,16 @@ public class LinearDepreciation implements ValuationPolicy {
         this.depreciationRate = depreciationRate;
     }
 
-    public void setDepreciationRate(BigDecimal depreciationRate) {
-        this.depreciationRate = depreciationRate;
-    }
-
     public BigDecimal getDepreciationRate() {
         return this.depreciationRate;
     }
 
+    public void setDepreciationRate(BigDecimal depreciationRate) {
+        this.depreciationRate = depreciationRate;
+    }
+
     @Override
-    public BigDecimal calculateValue(Bike bike, LocalDate date){
+    public BigDecimal calculateValue(Bike bike, LocalDate date) {
         // Complete formula: replacementValue - age*depreciationRate*replacementValue
 
         // first we get the age
@@ -39,8 +38,7 @@ public class LinearDepreciation implements ValuationPolicy {
 
         if (adjustedReplacementValue.compareTo(BigDecimal.ZERO) >= 0) {
             return adjustedReplacementValue;
-        }
-        else {
+        } else {
             throw new RuntimeException("Replacement value negative. Try to set a lower " +
                     "depreciation rate or replace the bike.");
         }

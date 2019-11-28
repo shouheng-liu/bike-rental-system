@@ -12,16 +12,16 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
         this.depreciationRate = depreciationRate;
     }
 
-    public void setDepreciationRate(BigDecimal depreciationRate) {
-        this.depreciationRate = depreciationRate;
-    }
-
     public BigDecimal getDepreciationRate() {
         return depreciationRate;
     }
 
+    public void setDepreciationRate(BigDecimal depreciationRate) {
+        this.depreciationRate = depreciationRate;
+    }
+
     @Override
-    public BigDecimal calculateValue(Bike bike, LocalDate date){
+    public BigDecimal calculateValue(Bike bike, LocalDate date) {
 
         //Complete formula (1 - 2 * depreciationRate)**age
 
@@ -40,8 +40,7 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
         BigDecimal adjustedReplacementValue = replacementValue.multiply(depreciationFactor);
         if (adjustedReplacementValue.compareTo(BigDecimal.ZERO) > 0) {
             return adjustedReplacementValue;
-        }
-        else {
+        } else {
             throw new RuntimeException("Replacement value negative or zero. Try to set a lower " +
                     "depreciation rate or replace the bike.");
         }

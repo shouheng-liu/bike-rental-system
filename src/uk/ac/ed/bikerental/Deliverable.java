@@ -1,7 +1,7 @@
 package uk.ac.ed.bikerental;
 
 public interface Deliverable {
-    public void onPickup();
+    void onPickup();
 
-    public void onDropoff();
+    void onDropoff();
 }

@@ -52,16 +52,12 @@ public class Bike implements Deliverable {
         return this.getType().getReplacementValue();
     }
 
-    public void setDailyPrice(BigDecimal dailyPrice) {
-        this.dailyPrice = dailyPrice.setScale(2, RoundingMode.CEILING);
-    }
-
     public BigDecimal getDailyPrice() {
         return this.dailyPrice;
     }
 
-    public void setBikeState(BikeState bikeState) {
-        this.bikeState = bikeState;
+    public void setDailyPrice(BigDecimal dailyPrice) {
+        this.dailyPrice = dailyPrice.setScale(2, RoundingMode.CEILING);
     }
 
     @Override
@@ -82,7 +78,7 @@ public class Bike implements Deliverable {
     @Override
     public int hashCode() {
         return Objects.hash(getBikeState(), getManufacturingDate(), bikeType, getIdentifier(),
-                 returnLocation, getDailyPrice(), getProviderName(), getDelivery());
+                returnLocation, getDailyPrice(), getProviderName(), getDelivery());
     }
 
     public OnDelivery getDelivery() {
@@ -102,8 +98,13 @@ public class Bike implements Deliverable {
     public void onDropoff() {
         this.delivery = OnDelivery.DROPOFF;
     }
+
     public BikeState getBikeState() {
         return this.bikeState;
+    }
+
+    public void setBikeState(BikeState bikeState) {
+        this.bikeState = bikeState;
     }
 
 }

@@ -5,7 +5,7 @@ public enum BookingStates {
     LEASEOVER, LEASEONGOING, RESERVED, ONDELIVERY, RETURNDELIVERY;
 
     public static BookingStates from(String bookingState) {
-        switch(bookingState) {
+        switch (bookingState) {
             case "leaseOver":
                 return LEASEOVER;
             case "leaseOngoing":

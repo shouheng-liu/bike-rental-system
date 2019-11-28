@@ -12,13 +12,13 @@ public class BookingController {
             DeliveryService deliveryService = DeliveryServiceFactory.getDeliveryService();
 
             for (Deliverable bike : booking.getBikes()) {
-                deliveryService.scheduleDelivery( bike, booking.provider.getAddress(),
+                deliveryService.scheduleDelivery(bike, booking.provider.getAddress(),
                         customer.getLocation(), booking.bookingDate);
 
             }
         }
         currentBookings.add(booking);
-        customer.getBookings().add(booking);
+        customer.getOrderInfos().add(booking.getPaymentInfo());
         return booking.getPaymentInfo();
     }
 

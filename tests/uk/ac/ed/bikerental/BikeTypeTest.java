@@ -1,10 +1,9 @@
 package uk.ac.ed.bikerental;
 
 
-import groovy.json.JsonOutput;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +23,9 @@ public class BikeTypeTest {
     @Test
     public void testSpelling() {
         assertThrows(RuntimeException.class, () ->
-        {new BikeType("MOUTAGNAD", replacementValue); });
+        {
+            new BikeType("MOUTAGNAD", replacementValue);
+        });
     }
 
 

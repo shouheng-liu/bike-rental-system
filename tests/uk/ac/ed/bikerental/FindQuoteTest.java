@@ -4,20 +4,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FindQuoteTest {
 
     LocalDate bookingDate;
     Location closeLocation, farAwayLocation;
-    Customer customer, customer2,customer3;
+    Customer customer, customer2, customer3;
     Provider provider, provider2;
     DateRange dateRange;
     ArrayList<Quote> quotes;
@@ -67,8 +65,10 @@ public class FindQuoteTest {
                 this.customer.getLocation(), true);
         assertEquals(BigDecimal.valueOf(1638.66).stripTrailingZeros(),
                 quotes.get(0).total.stripTrailingZeros());
-        assertEquals(BigDecimal.valueOf(800.0).stripTrailingZeros(), quotes.get(0).price.stripTrailingZeros());
-        assertEquals(BigDecimal.valueOf(838.66).stripTrailingZeros(), quotes.get(0).deposit.stripTrailingZeros());
+        assertEquals(BigDecimal.valueOf(800.0).stripTrailingZeros(),
+                quotes.get(0).price.stripTrailingZeros());
+        assertEquals(BigDecimal.valueOf(838.66).stripTrailingZeros(),
+                quotes.get(0).deposit.stripTrailingZeros());
     }
 
     @Test

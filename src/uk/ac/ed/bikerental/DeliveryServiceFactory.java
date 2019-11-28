@@ -4,10 +4,7 @@ public class DeliveryServiceFactory {
     private static DeliveryService deliveryServiceInstance;
 
     public static DeliveryService getDeliveryService() {
-        if (deliveryServiceInstance == null) {
-            // Not implemented -- we are only interested in testing using the Mock.
-            assert false;
-        }
+        assert deliveryServiceInstance != null;
         return deliveryServiceInstance;
     }
 

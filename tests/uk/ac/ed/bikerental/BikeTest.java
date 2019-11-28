@@ -24,8 +24,10 @@ class BikeTest {
     public void testExistenceType() {
 
         assertThrows(RuntimeException.class, () ->
-        {new Bike(BikeTypes.EBIKE, this.provider.getAddress(),
-                this.provider.getName());; });
+        {
+            new Bike(BikeTypes.EBIKE, this.provider.getAddress(),
+                    this.provider.getName());
+        });
     }
 
     @Test
@@ -35,15 +37,4 @@ class BikeTest {
         assertNotEquals(mountainBike.getIdentifier(), otherBike.getIdentifier());
     }
 
-    @Test
-    void getType() {
-        type = Controller.getBikeType(BikeTypes.from("mountainBike"));
-        assertEquals(type, mountainBike.getType());
-
-    }
-
-    @Test
-    void getManufacturingDate() {
-        assertEquals(LocalDate.now(), mountainBike.getManufacturingDate());
-    }
 }

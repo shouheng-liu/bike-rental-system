@@ -15,7 +15,7 @@ public class BookQuoteTest {
 
     LocalDate bookingDate;
     Location closeLocation, farAwayLocation;
-    Customer customer, customer2,customer3;
+    Customer customer, customer2, customer3;
     Provider provider, provider2;
     DateRange dateRange;
     ArrayList<Quote> quotes;
@@ -37,7 +37,7 @@ public class BookQuoteTest {
         this.provider.addBikes(BikeTypes.EBIKE, 3);
         this.provider.addBikes(BikeTypes.MOUNTAINBIKE, 8);
         this.provider2.addBikes(BikeTypes.MOUNTAINBIKE, 10);
-        this.provider2.getPricingPolicy().setDailyRentalPrice( bikeType,
+        this.provider2.getPricingPolicy().setDailyRentalPrice(bikeType,
                 BigDecimal.valueOf(20));
         this.provider2.addBikes(BikeTypes.EBIKE, 5);
         valuationPolicy = new DoubleBalanceDepreciation(BigDecimal.valueOf(0.1));
@@ -64,6 +64,8 @@ public class BookQuoteTest {
         assertEquals(chosenQuote.price, orderInfo.getPrice());
         assertEquals(chosenQuote.deposit, orderInfo.getDeposit());
         assertEquals(chosenQuote.total, orderInfo.getTotal());
+        Booking chosenBooking = BookingController.getBooking(orderInfo.getOrderNumber());
+        assertEquals(chosenQuote, chosenBooking);
     }
 
     @Test
@@ -74,6 +76,6 @@ public class BookQuoteTest {
                 true);
         Quote chosenQuote = this.quotes.get(0);
         BookingController.bookQuote(chosenQuote, this.customer);
-        MockDeliveryService.getPickupsOn();
+
     }
 }

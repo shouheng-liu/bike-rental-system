@@ -1,17 +1,12 @@
 package uk.ac.ed.bikerental;
 
 import java.time.LocalDate;
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class MockDeliveryService implements DeliveryService {
     Map<LocalDate, Collection<Deliverable>> pickups;
     Deque<Deliverable> dropoffs;
-    
+
     public MockDeliveryService() {
         this.pickups = new HashMap<LocalDate,
                 Collection<Deliverable>>();
@@ -28,11 +23,11 @@ public class MockDeliveryService implements DeliveryService {
                 new HashSet<Deliverable>());
         this.pickups.get(pickupDate).add(deliverable);
     }
-    
+
     public Collection<Deliverable> getPickupsOn(LocalDate date) {
         return this.pickups.get(date);
     }
-    
+
     public void carryOutPickups(LocalDate date) {
         if (this.pickups.containsKey(date)) {
             for (Deliverable d : this.pickups.get(date)) {

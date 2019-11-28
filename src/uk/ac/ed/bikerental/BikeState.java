@@ -5,7 +5,7 @@ public enum BikeState {
     RENTED, INSHOP, RETURNED;
 
     public static BikeState from(String BikeState) {
-        switch(BikeState) {
+        switch (BikeState) {
             case "rented":
                 return RENTED;
             case "inShop":

@@ -1,7 +1,6 @@
 package uk.ac.ed.bikerental;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
 
 public class PricingPolicyTests {
     // You can add attributes here
@@ -10,6 +9,6 @@ public class PricingPolicyTests {
     void setUp() throws Exception {
         // Put setup here
     }
-    
+
     // TODO: Write tests for pricing policies
 }

@@ -1,20 +1,18 @@
 package uk.ac.ed.bikerental;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Customer {
     private Location location;
-    private ArrayList<Booking> bookings = new ArrayList<>();
+    private ArrayList<Payment> orderInfos = new ArrayList<>();
 
-
-    public ArrayList<Booking> getBookings() {
-        return bookings;
-    }
 
     public Customer(Location location) {
         this.location = location;
+    }
+
+    public ArrayList<Payment> getOrderInfos() {
+        return orderInfos;
     }
 
     public Location getLocation() {

@@ -29,6 +29,7 @@ public class Provider {
         this.valuationPolicy = new BasicValuation();
         Controller.addProvider(this);
     }
+
     public Provider(Location shopLocation, String name, BigDecimal depositRate,
                     ValuationPolicy valuationPolicy) {
         this.name = name;
@@ -38,12 +39,12 @@ public class Provider {
         Controller.addProvider(this);
     }
 
-    public void setValuationPolicy(ValuationPolicy valuationPolicy) {
-        this.valuationPolicy = valuationPolicy;
-    }
-
     public ValuationPolicy getValuationPolicy() {
         return this.valuationPolicy;
+    }
+
+    public void setValuationPolicy(ValuationPolicy valuationPolicy) {
+        this.valuationPolicy = valuationPolicy;
     }
 
     public PricingPolicy getPricingPolicy() {
@@ -57,11 +58,12 @@ public class Provider {
     public void setDepositRate(BigDecimal depositRate) {
         this.depositRate = depositRate;
     }
-/* not sure if we will use method below
-    public void setRentalPrice(BikeTypes type, BigDecimal price) {
-        this.rentalPrices.put(type, price);
-    }
-*/
+
+    /* not sure if we will use method below
+        public void setRentalPrice(BikeTypes type, BigDecimal price) {
+            this.rentalPrices.put(type, price);
+        }
+    */
     public Location getAddress() {
         return this.address;
     }
@@ -105,11 +107,11 @@ public class Provider {
         for (BikeTypes type : requestedBikes.keySet()) {
             assert requestedBikes.get(type) <= this.availableBikes.get(type).size();
         }
-        for (BikeTypes type: requestedBikes.keySet()) {
+        for (BikeTypes type : requestedBikes.keySet()) {
             int i;
             int numberBikes = requestedBikes.get(type);
-            for (i = 0; i < numberBikes ; i++) {
-                Bike addedBike = this.getAvailableBikesOfType(type).get(0);
+            for (i = 0; i < numberBikes; i++) {
+                Bike addedBike = this.getAvailableBikesOfType(type).get(i);
                 bikes.add(addedBike);
             }
         }
@@ -136,17 +138,18 @@ public class Provider {
         }
     }
 
-    public void registerReturn(ArrayList<Bike> returnedBikes) {
-        String providerName = returnedBikes.get(0).getProviderName();
+    public void registerReturn(int bookingNumber) { //ArrayList<Bike> returnedBikes
+        Booking booking = BookingController.getBooking(bookingNumber);
+        String providerName = booking.provider.getName();
         if (providerName.equals(this.name)) {
-            for (Bike bike : returnedBikes) {
+            for (Bike bike : booking.getBikes()) {
                 this.availableBikes.get(bike.getType().getBikeType()).add(bike);
             }
         } else {
             for (Provider partner : this.partners) {
                 if (partner.getName().equals(providerName)) {
                     DeliveryService deliveryService = DeliveryServiceFactory.getDeliveryService();
-                    for (Deliverable bike : returnedBikes) {
+                    for (Deliverable bike : booking.getBikes()) {
                         deliveryService.scheduleDelivery(bike, this.address,
                                 partner.getAddress(), LocalDate.now());
                     }
@@ -185,7 +188,8 @@ public class Provider {
 
     @Override
     public int hashCode() {
-        return Objects.hash(ownedBikes, availableBikes, getName(), getAddress(), getDepositRate(), partners, getValuationPolicy(), getPricingPolicy());
+        return Objects.hash(ownedBikes, availableBikes, getName(), getAddress(), getDepositRate()
+                , partners, getValuationPolicy(), getPricingPolicy());
     }
 
 }

@@ -1,9 +1,13 @@
 package uk.ac.ed.bikerental;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LinearDepreciationTests {
     // You can add attributes here
@@ -19,7 +23,7 @@ public class LinearDepreciationTests {
         Location locationDummy = new Location("EH1 9LY", "London");
         Provider provider = new Provider(locationDummy, "Cheap bikes", BigDecimal.valueOf(0.2));
         bike = new Bike(BikeTypes.MOUNTAINBIKE, provider.getAddress(), provider.getName());
-        depreciationRate = BigDecimal.valueOf(1.0/10.0);
+        depreciationRate = BigDecimal.valueOf(1.0 / 10.0);
         dates[0] = LocalDate.now();
         dates[1] = LocalDate.now().plusYears(3);
         dates[2] = LocalDate.now().plusDays(10);
@@ -34,9 +38,13 @@ public class LinearDepreciationTests {
     public void testIfPercentage() {
 
         assertThrows(AssertionError.class, () ->
-        {new LinearDepreciation(BigDecimal.TEN); });
+        {
+            new LinearDepreciation(BigDecimal.TEN);
+        });
         assertThrows(AssertionError.class, () ->
-        {new LinearDepreciation(BigDecimal.valueOf(-10.0)); });
+        {
+            new LinearDepreciation(BigDecimal.valueOf(-10.0));
+        });
     }
 
     /*
@@ -60,7 +68,9 @@ public class LinearDepreciationTests {
         assertEquals(linearPolicy.calculateValue(bike, dates[2]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
         assertThrows(RuntimeException.class, () ->
-        {linearPolicy.calculateValue(bike, dates[3]); });
+        {
+            linearPolicy.calculateValue(bike, dates[3]);
+        });
 
     }
 }

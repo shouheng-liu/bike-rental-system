@@ -55,7 +55,8 @@ public class Quote {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBikes(), deliverable, bookingDate, returnDate, provider, total, price, deposit);
+        return Objects.hash(getBikes(), deliverable, bookingDate, returnDate, provider, total,
+                price, deposit);
     }
 
     public BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
@@ -84,9 +85,6 @@ public class Quote {
     public boolean isDeliverable(Location customerLocation, Location providerLocation) {
         return customerLocation.isNearTo(providerLocation);
     }
-
-
-
 
 
 }

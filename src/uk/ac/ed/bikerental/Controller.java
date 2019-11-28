@@ -5,7 +5,8 @@ import java.util.HashMap;
 
 public class Controller {
 
-    private static final HashMap<BikeTypes, BikeType> ExistingBikeTypes = new HashMap<BikeTypes, BikeType>();
+    private static final HashMap<BikeTypes, BikeType> ExistingBikeTypes = new HashMap<BikeTypes,
+            BikeType>();
     private static final ArrayList<Provider> providers = new ArrayList<>();
     private static int identifierCount;
 
@@ -17,17 +18,16 @@ public class Controller {
         return ExistingBikeTypes.get(type);
     }
 
-    public static void setIdentifierCount(int identifierCount) {
-        Controller.identifierCount = identifierCount;
-    }
-
     public static ArrayList<Provider> getProviders() {
         return providers;
     }
 
-
     public static int getIdentifierCount() {
         return identifierCount;
+    }
+
+    public static void setIdentifierCount(int identifierCount) {
+        Controller.identifierCount = identifierCount;
     }
 
     public static void addProvider(Provider provider) {
@@ -39,11 +39,12 @@ public class Controller {
     }
 
     public static ArrayList<Quote> getQuotes(HashMap<BikeTypes, Integer> desiredBikes,
-                                      DateRange dateRange, Location location, boolean delivery) {
+                                             DateRange dateRange, Location location,
+                                             boolean delivery) {
         ArrayList<Quote> quotes = new ArrayList<Quote>();
         for (Provider provider : providers) {
             Quote quote;
-            if (location.isNearTo(provider.getAddress()) || !delivery)  {
+            if (location.isNearTo(provider.getAddress()) || !delivery) {
                 ArrayList<Bike> bikesForQuote;
                 boolean flag = true;
                 for (BikeTypes type : desiredBikes.keySet()) {
