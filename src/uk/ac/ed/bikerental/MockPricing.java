@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implements the interface PricingPolicy
+ */
 public class MockPricing implements PricingPolicy{
 
     /*variable to store corresponding
