@@ -18,6 +18,7 @@ public class BookingController {
             }
         }
         currentBookings.add(booking);
+        customer.getBookings().add(booking);
         return booking.getPaymentInfo();
     }
 

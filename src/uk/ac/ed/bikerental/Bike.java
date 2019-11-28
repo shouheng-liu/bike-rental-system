@@ -89,6 +89,10 @@ public class Bike implements Deliverable {
         return this.delivery;
     }
 
+    public void setDelivery(OnDelivery delivery) {
+        this.delivery = delivery;
+    }
+
     @Override
     public void onPickup() {
         this.delivery = OnDelivery.PICKUP;

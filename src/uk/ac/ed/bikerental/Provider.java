@@ -16,6 +16,7 @@ public class Provider {
     private String name;
     private Location address;
     private BigDecimal depositRate;
+    private HashMap<BikeTypes, BigDecimal> rentalPrices = new HashMap<>();
     private HashSet<Provider> partners = new HashSet<>();
     private ValuationPolicy valuationPolicy;
     private PricingPolicy pricingPolicy = new BasicPricing(this);
@@ -56,7 +57,11 @@ public class Provider {
     public void setDepositRate(BigDecimal depositRate) {
         this.depositRate = depositRate;
     }
-
+/* not sure if we will use method below
+    public void setRentalPrice(BikeTypes type, BigDecimal price) {
+        this.rentalPrices.put(type, price);
+    }
+*/
     public Location getAddress() {
         return this.address;
     }
@@ -88,8 +93,9 @@ public class Provider {
             this.getOwnedBikesOfType(bikeType).add(newBike);
             this.getAvailableBikesOfType(bikeType).add(newBike);
         }
-        this.pricingPolicy.setDailyRentalPrice(Controller.getBikeType(bikeType),
-                BigDecimal.valueOf(10));
+        rentalPrices.putIfAbsent(bikeType, BigDecimal.valueOf(10));
+        BikeType type = Controller.getBikeType(bikeType);
+        this.pricingPolicy.setDailyRentalPrice(type, rentalPrices.get(bikeType));
     }
 
 
@@ -154,7 +160,9 @@ public class Provider {
         for (BikeTypes type : this.ownedBikes.keySet()) {
             for (Bike bike : this.ownedBikes.get(type)) {
                 if (bike.getDelivery() == OnDelivery.DROPOFF) {
-
+                    bike.setDelivery(OnDelivery.IDLE);
+                    bike.setBikeState(BikeState.INSHOP);
+                    availableBikes.get(type).add(bike);
                 }
             }
         }
