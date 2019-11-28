@@ -25,8 +25,7 @@ public class LinearDepreciationTests {
         dates[2] = LocalDate.now().plusDays(10);
         dates[3] = LocalDate.now().plusYears(11);
     }
-    
-    // TODO: Write tests for valuation policies
+
 
     /*
     We quickly check that the depreciation rate is a percentage value.

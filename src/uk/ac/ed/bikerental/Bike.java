@@ -2,7 +2,9 @@ package uk.ac.ed.bikerental;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Bike implements Deliverable {
     private BikeState bikeState;
@@ -12,6 +14,7 @@ public class Bike implements Deliverable {
     private Location returnLocation;
     private BigDecimal dailyPrice;
     private String providerName;
+    private OnDelivery delivery;
 
     public Bike(BikeTypes bikeType, Location returnLocation, String providerName) {
 
@@ -25,6 +28,7 @@ public class Bike implements Deliverable {
         this.manufacturingDate = LocalDate.now();
         this.identifier = Controller.getIdentifierCount();
         this.providerName = providerName;
+        this.delivery = OnDelivery.IDLE;
         Controller.setIdentifierCount(this.identifier + 1);
     }
 
@@ -49,7 +53,7 @@ public class Bike implements Deliverable {
     }
 
     public void setDailyPrice(BigDecimal dailyPrice) {
-        this.dailyPrice = dailyPrice;
+        this.dailyPrice = dailyPrice.setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getDailyPrice() {
@@ -61,13 +65,38 @@ public class Bike implements Deliverable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bike bike = (Bike) o;
+        return getIdentifier() == bike.getIdentifier() &&
+                getBikeState() == bike.getBikeState() &&
+                getManufacturingDate().equals(bike.getManufacturingDate()) &&
+                bikeType == bike.bikeType &&
+                returnLocation.equals(bike.returnLocation) &&
+                Objects.equals(getDailyPrice(), bike.getDailyPrice()) &&
+                getProviderName().equals(bike.getProviderName()) &&
+                getDelivery() == bike.getDelivery();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBikeState(), getManufacturingDate(), bikeType, getIdentifier(),
+                 returnLocation, getDailyPrice(), getProviderName(), getDelivery());
+    }
+
+    public OnDelivery getDelivery() {
+        return this.delivery;
+    }
+
+    @Override
     public void onPickup() {
-        this.bikeState = BikeState.PICKUP;
+        this.delivery = OnDelivery.PICKUP;
     }
 
     @Override
     public void onDropoff() {
-        this.bikeState = BikeState.DROPOFF;
+        this.delivery = OnDelivery.DROPOFF;
     }
     public BikeState getBikeState() {
         return this.bikeState;

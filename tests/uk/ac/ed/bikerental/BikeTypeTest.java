@@ -32,14 +32,14 @@ public class BikeTypeTest {
     public void testControllerHashmap() {
         BikeTypes type = BikeTypes.from(
                 "mountainBike");
-        new BikeType("mountainBike", BigDecimal.valueOf(1200.0));
-        BikeType hashmapBikeType = Controller.getBikeType(type); //Check that first registered
-        // bike type value is the final one
-        assertEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
-        BikeTypes type2 = BikeTypes.from("eBike");
-        new BikeType("eBike", BigDecimal.valueOf(1230.0)); //check if replacement value for each
-        // bikeType can be different
-        hashmapBikeType = Controller.getBikeType(type2);
+        BikeType sameBikeType = new BikeType("mountainBike", BigDecimal.valueOf(1200.0));
+        BikeType hashmapBikeType = Controller.getBikeType(type);
+        //Check that first registered bike type object is final one for that bike type
+        assertFalse(hashmapBikeType.equals(sameBikeType));
+
+        //check if replacement value for each bikeType can be different
+        new BikeType("eBike", BigDecimal.valueOf(1230.0));
+        hashmapBikeType = Controller.getBikeType(BikeTypes.EBIKE);
         assertNotEquals(hashmapBikeType.getReplacementValue(), bikeType.getReplacementValue());
 
     }

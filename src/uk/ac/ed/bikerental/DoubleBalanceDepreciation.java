@@ -24,16 +24,20 @@ public class DoubleBalanceDepreciation implements ValuationPolicy {
     public BigDecimal calculateValue(Bike bike, LocalDate date){
 
         //Complete formula (1 - 2 * depreciationRate)**age
-        BigDecimal age = //first get age difference between bike and actual hiring date
+
+        //first get age difference between bike and actual hiring date
+        BigDecimal age =
                 BigDecimal.valueOf(new DateRange(bike.getManufacturingDate(), date).toYears());
-        BigDecimal replacementValue = bike.getReplacementValue();   //get replacement value
-        BigDecimal depreciationFactor = BigDecimal.valueOf(2);           //   replacementValue*
-        depreciationFactor = depreciationFactor.multiply(this.depreciationRate);// multiply
+        BigDecimal replacementValue = bike.getReplacementValue();
+        BigDecimal depreciationFactor = BigDecimal.valueOf(2);
         // depreciationfactor by two
-        depreciationFactor = BigDecimal.ONE.subtract(depreciationFactor); // 1 - depreciationFactor
-        depreciationFactor = depreciationFactor.pow(age.intValue()); // take it to the power of age
+        depreciationFactor = depreciationFactor.multiply(this.depreciationRate);
+        // 1 - depreciationFactor
+        depreciationFactor = BigDecimal.ONE.subtract(depreciationFactor);
+        // take it to the power of age
+        depreciationFactor = depreciationFactor.pow(age.intValue());
+        //multiply result with the replacement value
         BigDecimal adjustedReplacementValue = replacementValue.multiply(depreciationFactor);
-        //multiply that with the replacement value
         if (adjustedReplacementValue.compareTo(BigDecimal.ZERO) > 0) {
             return adjustedReplacementValue;
         }

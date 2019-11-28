@@ -14,7 +14,7 @@ public class DoubleBalanceTest {
     BigDecimal depreciationRate;
     LocalDate[] dates = new LocalDate[3];
     Bike bike;
-    BigDecimal replacementValue = BigDecimal.valueOf(900.0);
+    BigDecimal replacementValue;
     BikeType bikeType = new BikeType("mountainBike", replacementValue);
 
 
@@ -23,11 +23,12 @@ public class DoubleBalanceTest {
         // Put setup here
         Location locationDummy = new Location("EH1 5LY", "Cowgate");
         Provider provider = new Provider(locationDummy, "Cheap bikes", BigDecimal.valueOf(0.2));
-        bike = new Bike(BikeTypes.MOUNTAINBIKE, provider.getAddress(), provider.getName());
-        depreciationRate = BigDecimal.valueOf(1.0/10.0);
-        dates[0] = LocalDate.now();
-        dates[1] = LocalDate.now().plusYears(3);
-        dates[2] = LocalDate.now().plusDays(10);
+        this.bike = new Bike(BikeTypes.MOUNTAINBIKE, provider.getAddress(), provider.getName());
+        this.replacementValue = BigDecimal.valueOf(900.0);
+        this.depreciationRate = BigDecimal.valueOf(1.0/10.0);
+        this.dates[0] = LocalDate.now();
+        this.dates[1] = LocalDate.now().plusYears(3);
+        this.dates[2] = LocalDate.now().plusDays(10);
     }
 
     /*
@@ -48,10 +49,10 @@ public class DoubleBalanceTest {
      */
     @Test
     public void testDepreciationIsOriginal() {
-        ValuationPolicy doubleBalancePolicy = new DoubleBalanceDepreciation(depreciationRate);
-        assertEquals(doubleBalancePolicy.calculateValue(bike, dates[0]).stripTrailingZeros(),
+        ValuationPolicy valuationPolicy = new DoubleBalanceDepreciation(depreciationRate);
+        assertEquals(valuationPolicy.calculateValue(bike, dates[0]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
-        assertEquals(doubleBalancePolicy.calculateValue(bike, dates[2]).stripTrailingZeros(),
+        assertEquals(valuationPolicy.calculateValue(bike, dates[2]).stripTrailingZeros(),
                 bike.getReplacementValue().stripTrailingZeros());
     }
 
@@ -61,9 +62,9 @@ public class DoubleBalanceTest {
      */
     @Test
     public void testDepreciation() {
-        ValuationPolicy doubleBalancePolicy = new DoubleBalanceDepreciation(depreciationRate);
+        ValuationPolicy valuationPolicy = new DoubleBalanceDepreciation(depreciationRate);
         assertEquals(BigDecimal.valueOf(460.8).stripTrailingZeros(),
-                doubleBalancePolicy.calculateValue(bike, dates[1]).stripTrailingZeros());
+                valuationPolicy.calculateValue(bike, dates[1]).stripTrailingZeros());
     }
 
 

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
 
 public class Provider {
 
@@ -14,7 +16,7 @@ public class Provider {
     private String name;
     private Location address;
     private BigDecimal depositRate;
-    private ArrayList<Provider> partners = new ArrayList<Provider>();
+    private HashSet<Provider> partners = new HashSet<>();
     private ValuationPolicy valuationPolicy;
     private PricingPolicy pricingPolicy = new BasicPricing(this);
 
@@ -69,6 +71,10 @@ public class Provider {
 
     public String getName() {
         return this.name;
+    }
+
+    public void addPartner(Provider partner) {
+        this.partners.add(partner);
     }
 
     public void addBikes(BikeTypes bikeType, int amount) {
@@ -142,4 +148,36 @@ public class Provider {
             }
         }
     }
+
+    //fully implement that, don't forget to send money back to original provider
+    public void checkForDropoffs() {
+        for (BikeTypes type : this.ownedBikes.keySet()) {
+            for (Bike bike : this.ownedBikes.get(type)) {
+                if (bike.getDelivery() == OnDelivery.DROPOFF) {
+
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Provider provider = (Provider) o;
+        return Objects.equals(ownedBikes, provider.ownedBikes) &&
+                Objects.equals(availableBikes, provider.availableBikes) &&
+                getName().equals(provider.getName()) &&
+                getAddress().equals(provider.getAddress()) &&
+                getDepositRate().equals(provider.getDepositRate()) &&
+                Objects.equals(partners, provider.partners) &&
+                getValuationPolicy().equals(provider.getValuationPolicy()) &&
+                getPricingPolicy().equals(provider.getPricingPolicy());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ownedBikes, availableBikes, getName(), getAddress(), getDepositRate(), partners, getValuationPolicy(), getPricingPolicy());
+    }
+
 }

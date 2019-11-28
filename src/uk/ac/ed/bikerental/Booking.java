@@ -1,11 +1,29 @@
 package uk.ac.ed.bikerental;
 
+import java.util.Objects;
+
 public class Booking extends Quote {
 
     private boolean addressDelivery;
     private BookingStates bookingStatus;
     private Payment paymentInfo;
     private Customer customer;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Booking booking = (Booking) o;
+        return getAddressDelivery() == booking.getAddressDelivery() &&
+                bookingStatus == booking.bookingStatus &&
+                getPaymentInfo().equals(booking.getPaymentInfo()) &&
+                customer.equals(booking.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAddressDelivery(), bookingStatus, getPaymentInfo(), customer);
+    }
 
     public Booking(Quote quote, Customer customer) {
         super();

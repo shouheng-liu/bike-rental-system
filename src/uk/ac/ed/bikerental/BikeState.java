@@ -2,7 +2,7 @@ package uk.ac.ed.bikerental;
 
 public enum BikeState {
 
-    RENTED, INSHOP, RETURNED, PICKUP, DROPOFF;
+    RENTED, INSHOP, RETURNED;
 
     public static BikeState from(String BikeState) {
         switch(BikeState) {
