@@ -90,6 +90,9 @@ public class Provider {
         this.partners.add(partner);
     }
 
+    /*
+    Adds new bikes to inventory
+     */
     public void addBikes(BikeTypes bikeType, int amount) {
         this.ownedBikes.putIfAbsent(bikeType, new ArrayList<Bike>());
         this.availableBikes.putIfAbsent(bikeType, new ArrayList<Bike>());
@@ -104,7 +107,10 @@ public class Provider {
         this.pricingPolicy.setDailyRentalPrice(type, rentalPrices.get(bikeType));
     }
 
-
+    /*
+    Returns requested quantity of bike objects if as many are available, otherwise throws an
+    assertion error.
+     */
     public ArrayList<Bike> getBikes(HashMap<BikeTypes, Integer> requestedBikes) {
         ArrayList<Bike> bikes = new ArrayList<Bike>();
 
@@ -114,6 +120,7 @@ public class Provider {
         for (BikeTypes type : requestedBikes.keySet()) {
             int i;
             int numberBikes = requestedBikes.get(type);
+            assert numberBikes <= this.getAvailableBikesOfType(type).size();
             for (i = 0; i < numberBikes; i++) {
                 Bike addedBike = this.getAvailableBikesOfType(type).get(i);
                 bikes.add(addedBike);
@@ -122,6 +129,9 @@ public class Provider {
         return bikes;
     }
 
+    /*
+    Removes lended bikes from available bikes.
+     */
     public void lendBikes(ArrayList<Bike> requestedBikes) {
 
         for (Bike bike : requestedBikes) {
@@ -131,18 +141,24 @@ public class Provider {
         }
     }
 
+    /*
+    Adds returned bikes into inventory.
+     */
     private void recordBikeReturn(HashMap<BikeTypes, ArrayList<Bike>> returnedBikes) {
-        //ArrayList<Integer> ids = new ArrayList<Integer>();
         for (BikeTypes type : returnedBikes.keySet()) {
             this.getAvailableBikesOfType(type).addAll(returnedBikes.get(type));
             for (Bike bike : this.getAvailableBikesOfType(type)) {
                 bike.setBikeState(BikeState.INSHOP);
-                //ids.add(bike.getIdentifier());
             }
         }
     }
 
-    public boolean registerReturn(int bookingNumber) { //ArrayList<Bike> returnedBikes
+    /*
+    Puts bikes associated with the bookingNumber into the provider's inventory if they belong to
+    him, otherwise sends them to the corresponding partner provider. Returns true if the provider
+     got successfully identified, otherwise throws an assertion error.
+     */
+    public boolean registerReturn(int bookingNumber) {
         Booking booking = BookingController.getBooking(bookingNumber);
         booking.setBookingStatus(BookingStates.LEASEOVER);
         String providerName = booking.provider.getName();
@@ -167,7 +183,10 @@ public class Provider {
         }
     }
 
-    //fully implement that, don't forget to send money back to original provider
+   /*
+   Provider checks for dropoffs. If any of its bikes have been dropped of, he adds those to his
+   available bikes.
+    */
     public void checkForDropoffs() {
         for (BikeTypes type : this.ownedBikes.keySet()) {
             for (Bike bike : this.ownedBikes.get(type)) {

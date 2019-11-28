@@ -49,7 +49,8 @@ public class Controller {
             Quote quote;
             if (location.isNearTo(provider.getAddress()) || !delivery) {
                 ArrayList<Bike> bikesForQuote;
-                boolean flag = true;
+                boolean flag = true; //If any of the rental needs can not be fulfilled, this is
+                // false
                 for (BikeTypes type : desiredBikes.keySet()) {
                     if (provider.getAvailableBikesOfType(type) == null) {
                         flag = false;
