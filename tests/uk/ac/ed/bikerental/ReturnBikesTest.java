@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReturnBikesTest {
 
@@ -64,12 +65,17 @@ public class ReturnBikesTest {
                 this.customer.getLocation(),
                 false);
         Quote chosenQuote = this.quotes.get(0);
+        ArrayList<Bike> chosenBikes = chosenQuote.getBikes();
+        ArrayList<Bike> availableBikesProvider = new ArrayList<>();
         Provider originalProvider = chosenQuote.provider;
+
         Payment orderInfo = BookingController.bookQuote(chosenQuote, this.customer);
         originalProvider.registerReturn(orderInfo.getOrderNumber());
-        for (BikeTypes type : this.desiredBikes.keySet()) {
-            assertEquals(originalProvider.getOwnedBikesOfType(type).size(),
-                    originalProvider.getAvailableBikesOfType(type).size());
+        for (BikeTypes type : originalProvider.getOwnedBikes().keySet()) {
+            availableBikesProvider.addAll(originalProvider.getAvailableBikesOfType(type));
+        }
+        for (Bike bike : chosenBikes) {
+            assertTrue(availableBikesProvider.contains(bike));
         }
     }
 
