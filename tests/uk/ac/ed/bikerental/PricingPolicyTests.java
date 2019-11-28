@@ -1,7 +1,9 @@
 package uk.ac.ed.bikerental;
 
 import org.junit.jupiter.api.BeforeEach;
-
+/**
+ * Tests for Basic Pricing class
+ */
 public class PricingPolicyTests {
     // You can add attributes here
 

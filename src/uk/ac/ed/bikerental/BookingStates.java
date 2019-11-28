@@ -1,5 +1,9 @@
 package uk.ac.ed.bikerental;
 
+/**
+ * Enumeration of possible booking states
+ * Throws an exception if a booking state that's not included is called
+ */
 public enum BookingStates {
 
     LEASEOVER, LEASEONGOING, RESERVED, ONDELIVERY, RETURNDELIVERY;
