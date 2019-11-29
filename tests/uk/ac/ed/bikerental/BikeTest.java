@@ -25,7 +25,7 @@ class BikeTest {
 
         assertThrows(RuntimeException.class, () ->
         {
-            new Bike(BikeTypes.EBIKE, this.provider.getAddress(),
+            new Bike(BikeTypes.HYBRIDBIKE, this.provider.getAddress(),
                     this.provider.getName());
         });
     }

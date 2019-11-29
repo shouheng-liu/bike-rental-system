@@ -144,12 +144,10 @@ public class Provider {
     /*
      * Adds returned bikes into inventory.
      */
-    private void recordBikeReturn(HashMap<BikeTypes, ArrayList<Bike>> returnedBikes) {
-        for (BikeTypes type : returnedBikes.keySet()) {
-            this.getAvailableBikesOfType(type).addAll(returnedBikes.get(type));
-            for (Bike bike : this.getAvailableBikesOfType(type)) {
+    private void recordBikeReturn(ArrayList<Bike> returnedBikes) {
+        for (Bike bike : returnedBikes) {
                 bike.setBikeState(BikeState.INSHOP);
-            }
+                this.availableBikes.get(bike.getType().getBikeType()).add(bike);
         }
     }
 
@@ -163,9 +161,7 @@ public class Provider {
         booking.setBookingStatus(BookingStates.LEASEOVER);
         String providerName = booking.provider.getName();
         if (providerName.equals(this.name)) {
-            for (Bike bike : booking.getBikes()) {
-                this.availableBikes.get(bike.getType().getBikeType()).add(bike);
-            }
+            recordBikeReturn(booking.getBikes());
             return true;
         } else {
             for (Provider partner : this.partners) {
