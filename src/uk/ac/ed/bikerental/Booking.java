@@ -20,9 +20,9 @@ public class Booking extends Quote {
         this.addressDelivery = quote.deliverable;
         this.bookingDate = quote.bookingDate;
         this.returnDate = quote.returnDate;
-        this.deposit = quote.calculateDeposit(this.bikes);
-        this.price = quote.calculatePrice(this.bikes);
-        this.total = quote.calculateTotal();
+        this.deposit = quote.deposit;
+        this.price = quote.price;
+        this.total = quote.total;
         this.bookingStatus = BookingStates.LEASEONGOING;
         this.paymentInfo = new Payment(this.deposit, this.price, this.total);
 

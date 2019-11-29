@@ -56,7 +56,6 @@ public class Location {
      * @return A Boolean of whether first two chars of the postcode at the two location are the same
      */
     public boolean isNearTo(Location other) {
-        // TODO: Implement Location.isNearTo
         String input1 = this.postcode;
         String input2 = other.postcode;
         

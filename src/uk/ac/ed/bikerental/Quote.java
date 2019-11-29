@@ -62,7 +62,7 @@ public class Quote {
     /**
      * Calculate the deposit amount for bikes in an array
      */
-    public BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
+    private BigDecimal calculateDeposit(ArrayList<Bike> bikes) {
         BigDecimal deposit = BigDecimal.ZERO;
         for (Bike bike : bikes) {
             BigDecimal depositAmount = this.provider.getValuationPolicy().calculateValue(bike,
@@ -76,7 +76,7 @@ public class Quote {
     /**
      * Calculate the rent amount for bikes in an array
      */
-    public BigDecimal calculatePrice(ArrayList<Bike> bikes) {
+    private BigDecimal calculatePrice(ArrayList<Bike> bikes) {
         DateRange dateRange = new DateRange(this.bookingDate, this.returnDate);
         BigDecimal price = this.provider.getPricingPolicy().calculatePrice(bikes, dateRange);
         return price.setScale(2, RoundingMode.CEILING);
@@ -85,7 +85,7 @@ public class Quote {
     /**
      * Calculate the total price which includes the deposit amount and the rent amount
      */
-    public BigDecimal calculateTotal() {
+    private BigDecimal calculateTotal() {
         BigDecimal total = this.deposit;
         total = total.add(this.price);
         return total.setScale(2, RoundingMode.CEILING);
