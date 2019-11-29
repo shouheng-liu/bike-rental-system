@@ -1,0 +1,92 @@
+8E+2
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+╷
+├─ JUnit Jupiter ✔
+│  ├─ DoubleBalanceTest ✔
+│  │  ├─ testDepreciationIsOriginal() ✔
+│  │  ├─ testIfPercentage() ✔
+│  │  └─ testDepreciation() ✔
+│  ├─ TestDateRange ✔
+│  │  ├─ testToDays3() ✔
+│  │  ├─ testToDays18() ✔
+│  │  ├─ testOverlapsFalse() ✔
+│  │  ├─ testToYears1() ✔
+│  │  ├─ testToYears3() ✔
+│  │  └─ testOverlapsTrue() ✔
+│  ├─ ValuationPolicyTests ✔
+│  │  ├─ testCalculateValueFirst() ✔
+│  │  └─ testCalculateValueSecond() ✔
+│  ├─ FindQuoteTest ✔
+│  │  ├─ testMultiQuotes() ✔
+│  │  ├─ testPricing() ✔
+│  │  ├─ testCorrectAmountBikes() ✔
+│  │  ├─ testOnlyAvailableBikes() ✔
+│  │  └─ testFarAwayClient() ✔
+│  ├─ PricingPolicyTests ✔
+│  │  ├─ pricing10Days() ✔
+│  │  ├─ pricing30Days() ✔
+│  │  └─ testCalculatePrice() ✔
+│  ├─ BikeTest ✔
+│  │  ├─ testExistenceType() ✔
+│  │  └─ testUniqueID() ✔
+│  ├─ TestLocation ✔
+│  │  ├─ testLocation() ✔
+│  │  ├─ testIsNearToTrue() ✔
+│  │  ├─ testIsNearToFalse() ✔
+│  │  └─ testFirstTwoChars() ✔
+│  ├─ ReturnBikesTest ✔
+│  │  ├─ testWrongPartner() ✔
+│  │  ├─ testReturnOriginal() ✔
+│  │  └─ testDeliveryReturn() ✔
+│  ├─ BookQuoteTest ✔
+│  │  ├─ testBooking() ✔
+│  │  ├─ correctBikesRemoved() ✔
+│  │  ├─ testDelivery() ✔
+│  │  └─ testDeliveryToday() ✔
+│  ├─ MockPricingTests ✔
+│  │  ├─ pricing5Days() ✔
+│  │  ├─ pricing10Days() ✔
+│  │  └─ pricing30Days() ✔
+│  ├─ LinearDepreciationTests ✔
+│  │  ├─ testIfPercentage() ✔
+│  │  └─ testDepreciation() ✔
+│  ├─ BikeTypeTest ✔
+│  │  ├─ testCreation() ✔
+│  │  ├─ testSpelling() ✔
+│  │  └─ testControllerHashmap() ✔
+│  └─ SystemTests ✔
+│     └─ myFirstTest() ✘ expected: <The moon> but was: <cheese>
+└─ JUnit Vintage ✔
+
+Failures (1):
+  JUnit Jupiter:SystemTests:myFirstTest()
+    MethodSource [className = 'uk.ac.ed.bikerental.SystemTests', methodName = 'myFirstTest', methodParameterTypes = '']
+    => org.opentest4j.AssertionFailedError: expected: <The moon> but was: <cheese>
+       org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+       org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+       org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+       org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+       org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+       uk.ac.ed.bikerental.SystemTests.myFirstTest(SystemTests.java:32)
+       sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+       sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+       sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+       java.lang.reflect.Method.invoke(Method.java:498)
+       [...]
+
+Test run finished after 253 ms
+[        15 containers found      ]
+[         0 containers skipped    ]
+[        15 containers started    ]
+[         0 containers aborted    ]
+[        15 containers successful ]
+[         0 containers failed     ]
+[        41 tests found           ]
+[         0 tests skipped         ]
+[        41 tests started         ]
+[         0 tests aborted         ]
+[        40 tests successful      ]
+[         1 tests failed          ]
+
