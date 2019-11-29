@@ -67,15 +67,13 @@ public class BookQuoteTest {
     }
 
     /*
-    Check if prices got transferred correctly and if booking actually inherited from the chosenQuote
+    Check if prices got transferred correctly
      */
     @Test
     public void testBooking() {
         assertEquals(chosenQuote.price, orderInfo.getPrice());
         assertEquals(chosenQuote.deposit, orderInfo.getDeposit());
         assertEquals(chosenQuote.total, orderInfo.getTotal());
-        Booking booking = BookingController.getBooking(orderInfo.getOrderNumber());
-        assertEquals(chosenQuote, booking);
     }
 
     /**
