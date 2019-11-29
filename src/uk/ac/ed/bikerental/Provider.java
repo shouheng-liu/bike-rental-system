@@ -91,7 +91,7 @@ public class Provider {
     }
 
     /*
-    Adds new bikes to inventory
+     * Adds new bikes to inventory
      */
     public void addBikes(BikeTypes bikeType, int amount) {
         this.ownedBikes.putIfAbsent(bikeType, new ArrayList<Bike>());
@@ -108,8 +108,8 @@ public class Provider {
     }
 
     /*
-    Returns requested quantity of bike objects if as many are available, otherwise throws an
-    assertion error.
+     * Returns requested quantity of bike objects if as many are available, otherwise throws an
+     * assertion error.
      */
     public ArrayList<Bike> getBikes(HashMap<BikeTypes, Integer> requestedBikes) {
         ArrayList<Bike> bikes = new ArrayList<Bike>();
@@ -130,7 +130,7 @@ public class Provider {
     }
 
     /*
-    Removes lended bikes from available bikes.
+     * Removes lent bikes from available bikes.
      */
     public void lendBikes(ArrayList<Bike> requestedBikes) {
 
@@ -142,7 +142,7 @@ public class Provider {
     }
 
     /*
-    Adds returned bikes into inventory.
+     * Adds returned bikes into inventory.
      */
     private void recordBikeReturn(HashMap<BikeTypes, ArrayList<Bike>> returnedBikes) {
         for (BikeTypes type : returnedBikes.keySet()) {
@@ -154,9 +154,9 @@ public class Provider {
     }
 
     /*
-    Puts bikes associated with the bookingNumber into the provider's inventory if they belong to
-    him, otherwise sends them to the corresponding partner provider. Returns true if the provider
-     got successfully identified, otherwise throws an assertion error.
+     * Puts bikes associated with the bookingNumber into the provider's inventory if they belong to
+     * him, otherwise sends them to the corresponding partner provider. Returns true if the provider
+     * got successfully identified, otherwise throws an assertion error.
      */
     public boolean registerReturn(int bookingNumber) {
         Booking booking = BookingController.getBooking(bookingNumber);
@@ -184,8 +184,8 @@ public class Provider {
     }
 
    /*
-   Provider checks for dropoffs. If any of its bikes have been dropped of, he adds those to his
-   available bikes.
+    * Provider checks for dropoffs. If any of its bikes have been dropped of, he adds those to his
+    * available bikes.
     */
     public void checkForDropoffs() {
         for (BikeTypes type : this.ownedBikes.keySet()) {

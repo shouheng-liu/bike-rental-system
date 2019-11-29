@@ -3,7 +3,7 @@ package uk.ac.ed.bikerental;
 import java.time.LocalDate;
 import java.util.*;
 
-/**
+/*
  * Class containing a mock implementation of the delivery service
  * Implements the interface DeliveryService
  */
@@ -32,6 +32,10 @@ public class MockDeliveryService implements DeliveryService {
         return this.pickups.get(date);
     }
 
+    
+    /*
+     * Simulates pickups being carried out
+     */
     public void carryOutPickups(LocalDate date) {
         if (this.pickups.containsKey(date)) {
             for (Deliverable d : this.pickups.get(date)) {
@@ -42,6 +46,9 @@ public class MockDeliveryService implements DeliveryService {
         }
     }
 
+    /*
+     * Simulates drop offs being carried out
+     */
     public void carryOutDropoffs() {
         while (!(this.dropoffs.isEmpty())) {
             Deliverable d = this.dropoffs.pop();
