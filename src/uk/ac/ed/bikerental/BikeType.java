@@ -15,21 +15,41 @@ public class BikeType {
         Controller.addBikeType(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BikeType bikeType1 = (BikeType) o;
-        return getBikeType() == bikeType1.getBikeType() &&
-                getReplacementValue().equals(bikeType1.getReplacementValue());
-    }
+
 
     @Override
-    public int hashCode() {
-        return Objects.hash(getBikeType(), getReplacementValue());
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bikeType == null) ? 0 : bikeType.hashCode());
+		result = prime * result + ((replacementValue == null) ? 0 : replacementValue.hashCode());
+		return result;
+	}
 
-    public BigDecimal getReplacementValue() {
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BikeType other = (BikeType) obj;
+		if (bikeType != other.bikeType)
+			return false;
+		if (replacementValue == null) {
+			if (other.replacementValue != null)
+				return false;
+		} else if (!replacementValue.equals(other.replacementValue))
+			return false;
+		return true;
+	}
+
+
+
+	public BigDecimal getReplacementValue() {
         return this.replacementValue;
     }
 

@@ -58,27 +58,61 @@ public class Bike implements Deliverable {
         this.dailyPrice = dailyPrice.setScale(2, RoundingMode.CEILING);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bike bike = (Bike) o;
-        return getIdentifier() == bike.getIdentifier() &&
-                getBikeState() == bike.getBikeState() &&
-                getManufacturingDate().equals(bike.getManufacturingDate()) &&
-                bikeType == bike.bikeType &&
-                returnLocation.equals(bike.returnLocation) &&
-                Objects.equals(getDailyPrice(), bike.getDailyPrice()) &&
-                getProviderName().equals(bike.getProviderName());
-    }
+
 
     @Override
-    public int hashCode() {
-        return Objects.hash(getBikeState(), getManufacturingDate(), bikeType, getIdentifier(),
-                returnLocation, getDailyPrice(), getProviderName());
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bikeState == null) ? 0 : bikeState.hashCode());
+		result = prime * result + ((bikeType == null) ? 0 : bikeType.hashCode());
+		result = prime * result + ((dailyPrice == null) ? 0 : dailyPrice.hashCode());
+		result = prime * result + identifier;
+		result = prime * result + ((manufacturingDate == null) ? 0 : manufacturingDate.hashCode());
+		result = prime * result + ((providerName == null) ? 0 : providerName.hashCode());
+		result = prime * result + ((returnLocation == null) ? 0 : returnLocation.hashCode());
+		return result;
+	}
 
-    @Override
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bike other = (Bike) obj;
+		if (bikeState != other.bikeState)
+			return false;
+		if (bikeType != other.bikeType)
+			return false;
+		if (dailyPrice == null) {
+			if (other.dailyPrice != null)
+				return false;
+		} else if (!dailyPrice.equals(other.dailyPrice))
+			return false;
+		if (identifier != other.identifier)
+			return false;
+		if (manufacturingDate == null) {
+			if (other.manufacturingDate != null)
+				return false;
+		} else if (!manufacturingDate.equals(other.manufacturingDate))
+			return false;
+		if (providerName == null) {
+			if (other.providerName != null)
+				return false;
+		} else if (!providerName.equals(other.providerName))
+			return false;
+		if (returnLocation == null) {
+			if (other.returnLocation != null)
+				return false;
+		} else if (!returnLocation.equals(other.returnLocation))
+			return false;
+		return true;
+	}
+
+	@Override
     public void onPickup() {
         this.bikeState = BikeState.PICKUP;
     }

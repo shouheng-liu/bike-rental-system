@@ -198,25 +198,67 @@ public class Provider {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Provider provider = (Provider) o;
-        return Objects.equals(ownedBikes, provider.ownedBikes) &&
-                Objects.equals(availableBikes, provider.availableBikes) &&
-                getName().equals(provider.getName()) &&
-                getAddress().equals(provider.getAddress()) &&
-                getDepositRate().equals(provider.getDepositRate()) &&
-                Objects.equals(partners, provider.partners) &&
-                getValuationPolicy().equals(provider.getValuationPolicy()) &&
-                getPricingPolicy().equals(provider.getPricingPolicy());
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((availableBikes == null) ? 0 : availableBikes.hashCode());
+		result = prime * result + ((depositRate == null) ? 0 : depositRate.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((ownedBikes == null) ? 0 : ownedBikes.hashCode());
+		result = prime * result + ((partners == null) ? 0 : partners.hashCode());
+		result = prime * result + ((rentalPrices == null) ? 0 : rentalPrices.hashCode());
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ownedBikes, availableBikes, getName(), getAddress(), getDepositRate()
-                , partners, getValuationPolicy(), getPricingPolicy());
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Provider other = (Provider) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (availableBikes == null) {
+			if (other.availableBikes != null)
+				return false;
+		} else if (!availableBikes.equals(other.availableBikes))
+			return false;
+		if (depositRate == null) {
+			if (other.depositRate != null)
+				return false;
+		} else if (!depositRate.equals(other.depositRate))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (ownedBikes == null) {
+			if (other.ownedBikes != null)
+				return false;
+		} else if (!ownedBikes.equals(other.ownedBikes))
+			return false;
+		if (partners == null) {
+			if (other.partners != null)
+				return false;
+		} else if (!partners.equals(other.partners))
+			return false;
+		if (rentalPrices == null) {
+			if (other.rentalPrices != null)
+				return false;
+		} else if (!rentalPrices.equals(other.rentalPrices))
+			return false;
+		return true;
+	}
+
+
 
 }

@@ -30,23 +30,50 @@ public class Booking extends Quote {
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Booking booking = (Booking) o;
-        return getAddressDelivery() == booking.getAddressDelivery() &&
-                bookingStatus == booking.bookingStatus &&
-                getPaymentInfo().equals(booking.getPaymentInfo()) &&
-                customer.equals(booking.customer);
-    }
+
 
     @Override
-    public int hashCode() {
-        return Objects.hash(getAddressDelivery(), bookingStatus, getPaymentInfo(), customer);
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (addressDelivery ? 1231 : 1237);
+		result = prime * result + ((bookingStatus == null) ? 0 : bookingStatus.hashCode());
+		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result + ((paymentInfo == null) ? 0 : paymentInfo.hashCode());
+		return result;
+	}
 
-    public boolean getAddressDelivery() {
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Booking other = (Booking) obj;
+		if (addressDelivery != other.addressDelivery)
+			return false;
+		if (bookingStatus != other.bookingStatus)
+			return false;
+		if (customer == null) {
+			if (other.customer != null)
+				return false;
+		} else if (!customer.equals(other.customer))
+			return false;
+		if (paymentInfo == null) {
+			if (other.paymentInfo != null)
+				return false;
+		} else if (!paymentInfo.equals(other.paymentInfo))
+			return false;
+		return true;
+	}
+
+
+
+	public boolean getAddressDelivery() {
         return this.addressDelivery;
     }
 
