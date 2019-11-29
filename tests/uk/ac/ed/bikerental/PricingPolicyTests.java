@@ -48,21 +48,21 @@ public class PricingPolicyTests {
     // TODO: Write tests for pricing policies
     @Test
     void testCalculatePrice() {
-    	assertEquals(BigDecimal.valueOf(30.00),
+    	assertEquals(BigDecimal.valueOf(525.00),
                 this.pricingPolicy.calculatePrice(this.bikes,
                         dateRange1));
     }
 
     @Test
     void pricing10Days() {
-        assertEquals(BigDecimal.valueOf(30.00).setScale(2),
+        assertEquals(BigDecimal.valueOf(525.00).setScale(2),
                 this.pricingPolicy.calculatePrice(this.bikes,
                         dateRange2));
     }
 
     @Test
     void pricing30Days() {
-        assertEquals(BigDecimal.valueOf(40.00),
+        assertEquals(BigDecimal.valueOf(630.00),
                 this.pricingPolicy.calculatePrice(this.bikes,
                         dateRange3));
     }
