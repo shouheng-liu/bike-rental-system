@@ -24,6 +24,7 @@ public class FindQuoteTest {
 
     @BeforeEach
     void setUp() {
+    	Controller.getProviders().clear();
         this.closeLocation = new Location("EH1 1LY", "Cowgate");
         this.farAwayLocation = new Location("TW6 1EW", "Inner Ring E");
         this.customer = new Customer(closeLocation);

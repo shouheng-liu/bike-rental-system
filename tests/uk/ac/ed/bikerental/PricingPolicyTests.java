@@ -29,7 +29,8 @@ public class PricingPolicyTests {
         this.pricingPolicy = new BasicPricing(this.provider);
 
 
-
+        new BikeType("mountainBike", BigDecimal.valueOf(900));
+        new BikeType("eBike", BigDecimal.valueOf(1230));
         this.provider.addBikes(BikeTypes.EBIKE, 3);
         this.provider.addBikes(BikeTypes.MOUNTAINBIKE, 5);
         this.bikes.addAll(this.provider.getAvailableBikesOfType(BikeTypes.EBIKE));
