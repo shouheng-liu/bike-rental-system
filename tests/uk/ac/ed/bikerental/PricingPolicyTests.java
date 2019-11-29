@@ -45,36 +45,28 @@ public class PricingPolicyTests {
 
     }
 
-    // TODO: Write tests for pricing policies
+    /*
+    Since the basic pricing policy has no discount for a higher hire duration, each test should
+    output 525. Since 3*10*5 (for eBikes) + 5*15*5 (for mountainBikes) = 525
+     */
     @Test
     void testCalculatePrice() {
-    	assertEquals(BigDecimal.valueOf(30.00),
+    	assertEquals(BigDecimal.valueOf(525).stripTrailingZeros(),
                 this.pricingPolicy.calculatePrice(this.bikes,
-                        dateRange1));
+                        dateRange1).stripTrailingZeros());
     }
 
     @Test
     void pricing10Days() {
-        assertEquals(BigDecimal.valueOf(30.00).setScale(2),
+        assertEquals(BigDecimal.valueOf(525).stripTrailingZeros(),
                 this.pricingPolicy.calculatePrice(this.bikes,
-                        dateRange2));
+                        dateRange2).stripTrailingZeros());
     }
 
     @Test
     void pricing30Days() {
-        assertEquals(BigDecimal.valueOf(40.00),
+        assertEquals(BigDecimal.valueOf(525).stripTrailingZeros(),
                 this.pricingPolicy.calculatePrice(this.bikes,
-                        dateRange3));
+                        dateRange3).stripTrailingZeros());
     }
-
-//    @Test
-//    void testCalculatePrice() {
-//
-//        assertEquals(this.price1,
-//        		this.pricingPolicy.calculatePrice(this.bike2, this.date1).stripTrailingZeros());
-//
-//        assertEquals(this.price2,
-//        		this.pricingPolicy.calculatePrice(this.bike2, this.date2).stripTrailingZeros());
-//
-//    }
 }
